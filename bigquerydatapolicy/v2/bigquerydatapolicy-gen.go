@@ -556,6 +556,13 @@ type DataPolicy struct {
 	// supported in V2 Data Policy only. In case of V1 data policies (i.e. verion =
 	// 1 and policy_tag is set), this field is not populated.
 	Grantees []string `json:"grantees,omitempty"`
+	// MatchingCondition: Optional. Matching condition specified as a SQL
+	// expression string. Data Governance Tag matcher functions are:
+	// `COLUMN_HAS_TAG_KEY(keyName STRING) -> BOOL` `COLUMN_MATCH_TAG(keyName
+	// STRING, valueShortName STRING) -> BOOL` For example:
+	// `COLUMN_HAS_TAG_KEY('project-id/pii') AND COLUMN_MATCH_TAG('project-id/pii',
+	// 'ssn')`
+	MatchingCondition string `json:"matchingCondition,omitempty"`
 	// Name: Identifier. Resource name of this data policy, in the format of
 	// `projects/{project_number}/locations/{location_id}/dataPolicies/{data_policy_
 	// id}`.

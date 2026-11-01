@@ -800,6 +800,11 @@ type GoogleCloudCesV1mainToolCall struct {
 	// for top-level calls. Lets a client group a sub-agent's work under the call
 	// that started it instead of rendering every step as a sibling.
 	ParentToolCallId string `json:"parentToolCallId,omitempty"`
+	// TargetApp: Output only. The app this call targets, derived by the assistant
+	// from the call's resource arguments: an app resource name, `PROJECT` for
+	// location-scoped tools, or empty for session-local tools. Set only in
+	// project-scoped assistant sessions.
+	TargetApp string `json:"targetApp,omitempty"`
 	// Tool: Optional. The name of the tool to execute. Format:
 	// `projects/{project}/locations/{location}/apps/{app}/tools/{tool}`
 	Tool string `json:"tool,omitempty"`
@@ -843,6 +848,9 @@ type GoogleCloudCesV1mainToolResponse struct {
 	// details (if any). If "output" and "error" keys are not specified, then whole
 	// "response" is treated as tool execution result.
 	Response googleapi.RawMessage `json:"response,omitempty"`
+	// TargetApp: Output only. The app the executed tool targeted; mirrors
+	// ToolCall.target_app.
+	TargetApp string `json:"targetApp,omitempty"`
 	// Tool: Optional. The name of the tool to execute. Format:
 	// `projects/{project}/locations/{location}/apps/{app}/tools/{tool}`
 	Tool string `json:"tool,omitempty"`
@@ -4985,6 +4993,8 @@ type GoogleCloudContactcenterinsightsV1ExportInsightsDataRequest struct {
 	//   "EXPORT_V15" - Export schema version 15.
 	//   "EXPORT_V16" - Export schema version 16.
 	//   "EXPORT_V17" - Export schema version 17.
+	//   "EXPORT_V18" - Export schema version 18.
+	//   "EXPORT_V19" - Export schema version 19.
 	//   "EXPORT_VERSION_LATEST_AVAILABLE" - Export schema version latest
 	// available.
 	ExportSchemaVersion string `json:"exportSchemaVersion,omitempty"`
@@ -13263,6 +13273,8 @@ type GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataRequest struct {
 	//   "EXPORT_V15" - Export schema version 15.
 	//   "EXPORT_V16" - Export schema version 16.
 	//   "EXPORT_V17" - Export schema version 17.
+	//   "EXPORT_V18" - Export schema version 18.
+	//   "EXPORT_V19" - Export schema version 19.
 	//   "EXPORT_VERSION_LATEST_AVAILABLE" - Export schema version latest
 	// available.
 	ExportSchemaVersion string `json:"exportSchemaVersion,omitempty"`
@@ -19476,6 +19488,8 @@ type GoogleCloudContactcenterinsightsV1mainExportInsightsDataRequest struct {
 	//   "EXPORT_V15" - Export schema version 15.
 	//   "EXPORT_V16" - Export schema version 16.
 	//   "EXPORT_V17" - Export schema version 17.
+	//   "EXPORT_V18" - Export schema version 18.
+	//   "EXPORT_V19" - Export schema version 19.
 	//   "EXPORT_VERSION_LATEST_AVAILABLE" - Export schema version latest
 	// available.
 	ExportSchemaVersion string `json:"exportSchemaVersion,omitempty"`
