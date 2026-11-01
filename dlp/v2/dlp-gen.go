@@ -1626,6 +1626,7 @@ type GooglePrivacyDlpV2ByteContentItem struct {
 	//   "VIDEO" - Video file types. Only used for profiling.
 	//   "EXECUTABLE" - Executable file types. Only used for profiling.
 	//   "AI_MODEL" - AI model file types. Only used for profiling.
+	//   "IMAGE_TIFF" - TIFF image format.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6898,6 +6899,9 @@ type GooglePrivacyDlpV2ImageLocation struct {
 	// BoundingBoxes: Bounding boxes locating the pixels within the image
 	// containing the finding.
 	BoundingBoxes []*GooglePrivacyDlpV2BoundingBox `json:"boundingBoxes,omitempty"`
+	// PageNumber: The 0-indexed page number or frame index for multi-page image
+	// formats.
+	PageNumber int64 `json:"pageNumber,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BoundingBoxes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

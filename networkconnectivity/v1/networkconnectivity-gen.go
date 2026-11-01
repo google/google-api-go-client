@@ -1394,6 +1394,37 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// ExportPscConfig: Configuration for more granular control of Private Service
+// Connect connection propagation. This allows enabling or disabling connection
+// propagation for specific types of Private Service Connect endpoints.
+type ExportPscConfig struct {
+	// GlobalGoogleApis: Optional. Controls whether Private Service Connect
+	// endpoints for global Google APIs should be propagated. The default value is
+	// false.
+	GlobalGoogleApis bool `json:"globalGoogleApis,omitempty"`
+	// PublishedServicesAndRegionalGoogleApis: Optional. Controls whether Private
+	// Service Connect endpoints for regional ILBs and regional Google APIs should
+	// be propagated. Default value is true if export_psc is true. Otherwise, the
+	// default value is false.
+	PublishedServicesAndRegionalGoogleApis bool `json:"publishedServicesAndRegionalGoogleApis,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GlobalGoogleApis") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GlobalGoogleApis") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExportPscConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportPscConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Expr: Represents a textual expression in the Common Expression Language
 // (CEL) syntax. CEL is a C-like expression language. The syntax and semantics
 // of CEL are documented at https://github.com/google/cel-spec. Example
@@ -1852,6 +1883,9 @@ type Hub struct {
 	// spokes attached to the hub are made accessible to other VPC spokes attached
 	// to the hub. The default value is false.
 	ExportPsc bool `json:"exportPsc,omitempty"`
+	// ExportPscConfig: Optional. Config for more granular control of Private
+	// Service Connect transitivity.
+	ExportPscConfig *ExportPscConfig `json:"exportPscConfig,omitempty"`
 	// Labels: Optional labels in key-value pair format. For more information about
 	// labels, see Requirements for labels
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
@@ -4271,6 +4305,8 @@ type Route struct {
 	//   "DYNAMIC_ROUTE" - The route leads to a destination in a dynamic route.
 	// Dynamic routes are derived from Border Gateway Protocol (BGP) advertisements
 	// received from an NCC hybrid spoke.
+	//   "PSC_GLOBAL_GAPI" - The route leads to a destination within the Private
+	// Service Connect Global Google API range of the VPC network.
 	Type string `json:"type,omitempty"`
 	// Uid: Output only. The Google-generated UUID for the route. This value is
 	// unique across all Network Connectivity Center route resources. If a route is
