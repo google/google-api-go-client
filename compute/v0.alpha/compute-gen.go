@@ -15039,6 +15039,8 @@ type ConfidentialInstanceConfig struct {
 	ConfidentialParavisorConfig *ConfidentialParavisorConfig `json:"confidentialParavisorConfig,omitempty"`
 	// EnableConfidentialCompute: Defines whether the instance should have
 	// confidential compute enabled.
+	// When enabled, the technology used defaults to
+	// AMD SEV unless confidentialInstanceType is specified.
 	EnableConfidentialCompute bool `json:"enableConfidentialCompute,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConfidentialInstanceType")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -15060,15 +15062,23 @@ func (s ConfidentialInstanceConfig) MarshalJSON() ([]byte, error) {
 
 // ConfidentialParavisorConfig: A set of Confidential Paravisor (SVSM) options.
 type ConfidentialParavisorConfig struct {
+	// ConfidentialTpmType: Defines the type of TPM to use for the confidential
+	// instance.
+	//
 	// Possible values:
-	//   "CONFIDENTIAL_TPM_TYPE_UNSPECIFIED"
-	//   "EPHEMERAL"
-	//   "NO_CC_TPM"
+	//   "CONFIDENTIAL_TPM_TYPE_UNSPECIFIED" - No TPM type specified. Do not use
+	// this value.
+	//   "EPHEMERAL" - An ephemeral vTPM running in the paravisor (SVSM).
+	//   "NO_CC_TPM" - No confidential computing vTPM is used in the paravisor
+	// (SVSM).
 	ConfidentialTpmType string `json:"confidentialTpmType,omitempty"`
+	// SevSnpIrqMode: Defines the IRQ mode to use for the confidential instance.
+	//
 	// Possible values:
-	//   "RESTRICTED"
-	//   "SEV_SNP_IRQ_MODE_UNSPECIFIED"
-	//   "UNRESTRICTED"
+	//   "RESTRICTED" - Restricted interrupt injection.
+	//   "SEV_SNP_IRQ_MODE_UNSPECIFIED" - No IRQ mode specified. Do not use this
+	// value.
+	//   "UNRESTRICTED" - Unrestricted interrupt injection.
 	SevSnpIrqMode string `json:"sevSnpIrqMode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConfidentialTpmType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -50093,13 +50103,13 @@ func (s MachineImageListWarningData) MarshalJSON() ([]byte, error) {
 
 // MachineImageParams: Machine Image parameters
 type MachineImageParams struct {
-	// ExcludedDisks: Input only. [Input Only] Specifies the list of disk device
-	// names that must be
-	// excluded from the new machine image.
+	// ExcludedDisks: Input only. Specifies the list of disk device names that must
+	// be excluded from the
+	// new machine image.
 	ExcludedDisks []string `json:"excludedDisks,omitempty"`
-	// IncludedDisks: Input only. [Input Only] Specifies the list of disk device
-	// names that must be
-	// included with the new machine image.
+	// IncludedDisks: Input only. Specifies the list of disk device names that must
+	// be included with the
+	// new machine image.
 	IncludedDisks []string `json:"includedDisks,omitempty"`
 	// ResourceManagerTags: Input only. Resource manager tags to be bound to the
 	// machine image. Tag keys and values
@@ -68376,11 +68386,13 @@ type RecoverableSnapshotOriginalSnapshot struct {
 	// snapshot belongs to. The usage
 	// of snapshot group feature is restricted.
 	SnapshotGroupName string `json:"snapshotGroupName,omitempty"`
-	// SnapshotType: Indicates the type of the snapshot.
+	// SnapshotType: Indicates the type of the snapshot. Valid values are
+	// ARCHIVE
+	// or STANDARD.
 	//
 	// Possible values:
-	//   "ARCHIVE"
-	//   "STANDARD"
+	//   "ARCHIVE" - Indicates that the original snapshot is an archive snapshot.
+	//   "STANDARD" - Indicates that the original snapshot is a standard snapshot.
 	SnapshotType string `json:"snapshotType,omitempty"`
 	// SourceDisk: The source disk used to create this snapshot.
 	SourceDisk string `json:"sourceDisk,omitempty"`
@@ -85241,11 +85253,17 @@ type Snapshot struct {
 	// snapshot belongs to. The usage
 	// of snapshot group feature is restricted.
 	SnapshotGroupName string `json:"snapshotGroupName,omitempty"`
-	// SnapshotType: Indicates the type of the snapshot.
+	// SnapshotType: Indicates the type of the snapshot. Valid values are
+	// ARCHIVE
+	// or STANDARD. The default is STANDARD.
 	//
 	// Possible values:
-	//   "ARCHIVE"
-	//   "STANDARD"
+	//   "ARCHIVE" - Indicates an archive snapshot, which is recommended for
+	// long-term
+	// retention and compliance.
+	//   "STANDARD" - Indicates a standard snapshot, which is recommended for
+	// frequent
+	// restores.
 	SnapshotType string `json:"snapshotType,omitempty"`
 	// SourceDisk: The source disk used to create this snapshot.
 	SourceDisk string `json:"sourceDisk,omitempty"`
@@ -93124,7 +93142,7 @@ type TargetHttpsProxy struct {
 	// //certificatemanager.googleapis.com/projects/{project}/locations/{location}/c
 	// ertificates/{resourceName}.
 	//    -
-	// https://certificatemanager.googleapis.com/v1alpha1/projects/{project}/locations/{location}/certificates/{resourceName}.
+	// https://certificatemanager.{universeDomain}/v1alpha1/projects/{project}/locations/{location}/certificates/{resourceName}.
 	SslCertificates []string `json:"sslCertificates,omitempty"`
 	// SslPolicy: URL of SslPolicy resource that will be associated with the
 	// TargetHttpsProxy
