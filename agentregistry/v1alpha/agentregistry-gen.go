@@ -1088,8 +1088,6 @@ func (s File) MarshalJSON() ([]byte, error) {
 
 // Finding: Represents a security Finding.
 type Finding struct {
-	// Category: Optional. Category of the finding.
-	Category string `json:"category,omitempty"`
 	// CreateTime: Output only. Create time.
 	CreateTime string `json:"createTime,omitempty"`
 	// Detail: Optional. Detailed description of the finding.
@@ -1102,8 +1100,6 @@ type Finding struct {
 	//   "FINDING_CLASS_UNSPECIFIED" - Unspecified finding class.
 	//   "VULNERABILITY" - Describes a potential weakness in software that
 	// increases risk to Confidentiality & Integrity & Availability.
-	//   "OBSERVATION" - Describes a security observation that is for informational
-	// purposes.
 	//   "SECRET" - Describes a potential security risk due to plaintext
 	// credentials, keys, or tokens being exposed in an asset or workload.
 	FindingClass string `json:"findingClass,omitempty"`
@@ -1129,13 +1125,13 @@ type Finding struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Category") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Category") to include in API
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2701,7 +2697,7 @@ type Skill struct {
 	// Description: Optional. Brief summary describing the capabilities of the
 	// skill. Maximum length is 2048 characters.
 	Description string `json:"description,omitempty"`
-	// DisplayName: Required. Human-readable display name of the skill. Maximum
+	// DisplayName: Optional. Human-readable display name of the skill. Maximum
 	// length is 128 characters.
 	DisplayName string `json:"displayName,omitempty"`
 	// Frontmatter: Output only. Lightweight frontmatter metadata attributes copied
@@ -2932,21 +2928,24 @@ func (s Target) MarshalJSON() ([]byte, error) {
 
 // Tool: Represents a single tool provided by an MCP Server.
 type Tool struct {
+	// Meta: Output only. Protocol-level tool metadata conforming to MCP _meta
+	// specification. Output only.
+	Meta googleapi.RawMessage `json:"_meta,omitempty"`
 	// Annotations: Output only. Annotations associated with the tool.
 	Annotations *Annotations `json:"annotations,omitempty"`
 	// Description: Output only. Description of what the tool does.
 	Description string `json:"description,omitempty"`
 	// Name: Output only. Human-readable name of the tool.
 	Name string `json:"name,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Annotations") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Meta") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Annotations") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Meta") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

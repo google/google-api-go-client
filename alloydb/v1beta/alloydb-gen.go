@@ -1154,6 +1154,29 @@ func (s ConnectionPoolConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ConnectionsCount: Connections count policy for the autoscaler.
+type ConnectionsCount struct {
+	// TargetCount: Optional. The target number of connections for the autoscaler
+	// to scale the instance to.
+	TargetCount int64 `json:"targetCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "TargetCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TargetCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConnectionsCount) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectionsCount
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ContinuousBackupConfig: ContinuousBackupConfig describes the continuous
 // backups recovery configurations of a cluster.
 type ContinuousBackupConfig struct {
@@ -3063,6 +3086,9 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 
 // Policy: Policy for the autoscaler.
 type Policy struct {
+	// ConnectionsCount: Optional. Connections count policy for the autoscaler. If
+	// not set, the autoscaler will not use connection count for scaling.
+	ConnectionsCount *ConnectionsCount `json:"connectionsCount,omitempty"`
 	// CoolDownPeriodSec: The period of time in seconds after a new node is created
 	// before the autoscaler will incorporate its resource usage (e.g. CPU
 	// utilization) into the autoscaling recommendation algorithm.
@@ -3074,13 +3100,13 @@ type Policy struct {
 	Enabled bool `json:"enabled,omitempty"`
 	// MaxNodeCount: Maximum number of nodes for the autoscaler.
 	MaxNodeCount int64 `json:"maxNodeCount,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g. "CoolDownPeriodSec") to
+	// ForceSendFields is a list of field names (e.g. "ConnectionsCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CoolDownPeriodSec") to include in
+	// NullFields is a list of field names (e.g. "ConnectionsCount") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
