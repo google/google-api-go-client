@@ -556,6 +556,11 @@ type AddOnAttachment struct {
 	// DueTime: Time of day, in UTC, that work on this attachment is due. This must
 	// be specified if `due_date` is specified.
 	DueTime *TimeOfDay `json:"dueTime,omitempty"`
+	// GradeSyncEnabled: Output only. Whether changes to `pointsEarned` values on
+	// this attachment's student submissions will be copied to the `pointsEarned`
+	// field on the students' CourseWork submissions. This field can be `true` for
+	// at most one add-on attachment per stream item.
+	GradeSyncEnabled bool `json:"gradeSyncEnabled,omitempty"`
 	// Id: Immutable. Classroom-assigned identifier for this attachment, unique per
 	// post.
 	Id string `json:"id,omitempty"`

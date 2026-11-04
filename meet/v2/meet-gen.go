@@ -790,7 +790,7 @@ type Member struct {
 	// Email: Email for the member. This is required for creating the member.
 	Email string `json:"email,omitempty"`
 	// Name: Identifier. Resource name of the member. Format:
-	// spaces/{space}/members/{member}
+	// `spaces/{space}/members/{member}`
 	Name string `json:"name,omitempty"`
 	// Role: The meeting role assigned to the member.
 	//
@@ -1367,8 +1367,8 @@ type TranscriptEntry struct {
 	// BCP 47 syntax (https://tools.ietf.org/html/bcp47)
 	LanguageCode string `json:"languageCode,omitempty"`
 	// Name: Output only. Resource name of the entry. Format:
-	// "conferenceRecords/{conference_record}/transcripts/{transcript}/entries/{entr
-	// y}"
+	// `conferenceRecords/{conference_record}/transcripts/{transcript}/entries/{entr
+	// y}`
 	Name string `json:"name,omitempty"`
 	// Participant: Output only. Refers to the participant who speaks.
 	Participant string `json:"participant,omitempty"`
@@ -4383,7 +4383,7 @@ type SpacesMembersPatchCall struct {
 // (https://developers.google.com/workspace/meet/api/guides/meeting-space-members).
 //
 //   - name: Identifier. Resource name of the member. Format:
-//     spaces/{space}/members/{member}.
+//     `spaces/{space}/members/{member}`.
 func (r *SpacesMembersService) Patch(name string, member *Member) *SpacesMembersPatchCall {
 	c := &SpacesMembersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

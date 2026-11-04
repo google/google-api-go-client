@@ -2049,6 +2049,16 @@ type Project struct {
 	// as JSON that does not depend on specific characters being disallowed.
 	// Example: "myBusinessDimension" : "businessValue"
 	Labels map[string]string `json:"labels,omitempty"`
+	// ManagementType: Output only. The type of Management Project. This field is
+	// only populated if `is_management_project` is `true`.
+	//
+	// Possible values:
+	//   "MANAGEMENT_TYPE_UNSPECIFIED" - Unspecified type.
+	//   "SELF_MANAGED" - The Management Project is a self-managed project that
+	// constitutes its own boundary.
+	//   "HUB" - The Management Project is a hub project that manages resources
+	// across a boundary.
+	ManagementType string `json:"managementType,omitempty"`
 	// Name: Output only. The unique resource name of the project. It is an int64
 	// generated number prefixed by "projects/". Example: `projects/415104041262`
 	Name string `json:"name,omitempty"`

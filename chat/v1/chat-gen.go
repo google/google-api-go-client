@@ -1968,14 +1968,16 @@ func (s DeletionMetadata) MarshalJSON() ([]byte, error) {
 // In addition to receiving events from user interactions, Chat apps can
 // receive events about changes to spaces, such as when a new member is added
 // to a space. To learn about space events, see Work with events from Google
-// Chat (https://developers.google.com/workspace/chat/events-overview). Note:
-// This event is only used for Chat interaction events
-// (https://developers.google.com/workspace/chat/receive-respond-interactions).
+// Chat (https://developers.google.com/workspace/chat/events-overview).
+// Warning: This event object is only used for Chat apps that aren't add-ons
+// (https://developers.google.com/workspace/chat/receive-respond-interactions#not-add-on-interaction-events).
 // If your Chat app is built as a Google Workspace add-on
-// (https://developers.google.com/workspace/add-ons/chat/build), see Chat event
-// objects
+// (https://developers.google.com/workspace/add-ons/chat/build), instead see
+// Add-on event objects
 // (https://developers.google.com/workspace/add-ons/concepts/event-objects#chat-event-object)
-// in the add-ons documentation.
+// in the add-ons documentation. To confirm which type of event your app
+// receives, see Determine your event type
+// (https://developers.google.com/workspace/chat/receive-respond-interactions#determine-event-type).
 type DeprecatedEvent struct {
 	// Action: For `CARD_CLICKED` interaction events, the form action data
 	// associated when a user clicks a card or dialog. To learn more, see Read form
@@ -5940,7 +5942,10 @@ type Message struct {
 	// by a user. If the message has never been edited, this field is empty.
 	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
 	// MarkupSyntax: Optional. Specifies how the server interprets the message
-	// `text` field content.
+	// `text` field content when creating a message or updating the `text` field of
+	// a message. When calling `UpdateMessage`, set `markup_syntax` and `text` on
+	// the `Message` resource and include `text` (not `markup_syntax`) in
+	// `update_mask`.
 	//
 	// Possible values:
 	//   "MARKUP_SYNTAX_UNSPECIFIED" - Represents the unspecified value.

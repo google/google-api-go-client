@@ -3218,6 +3218,22 @@ type DeviceRadioState struct {
 	// ENTERPRISE_NETWORK_SECURITY. A NonComplianceDetail with API_LEVEL is
 	// reported if the Android version is less than 13.
 	MinimumWifiSecurityLevel string `json:"minimumWifiSecurityLevel,omitempty"`
+	// Nfc: Optional. Controls whether NFC is disabled on the device and if the
+	// user can toggle NFC between enabled and disabled. This is for fully managed
+	// devices. To control NFC on work profiles on company-owned devices, use
+	// deviceWidePolicies.deviceRadioState.nfc instead.
+	//
+	// Possible values:
+	//   "NFC_UNSPECIFIED" - Unspecified. Defaults to NFC_USER_CHOICE.
+	//   "NFC_USER_CHOICE" - The user is allowed to toggle NFC between enabled and
+	// disabled. A NonComplianceDetail with API_LEVEL is reported if the Android
+	// version is less than 15.
+	//   "NFC_DISABLED" - NFC is disabled on the device. The user is not allowed to
+	// toggle NFC on. This is supported on fully managed devices and work profiles
+	// on company-owned devices. For other management modes, a NonComplianceDetail
+	// with MANAGEMENT_MODE is reported. A NonComplianceDetail with API_LEVEL is
+	// reported if the Android version is less than 15.
+	Nfc string `json:"nfc,omitempty"`
 	// UltraWidebandState: Optional. Controls the state of the ultra wideband
 	// setting and whether the user can toggle it on or off.
 	//
@@ -3331,6 +3347,65 @@ type DeviceSettings struct {
 
 func (s DeviceSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeviceWidePolicies: Policies controlling the device on company-owned
+// devices.
+type DeviceWidePolicies struct {
+	// DeviceRadioState: Optional. Covers controls for radio state.
+	DeviceRadioState *DeviceWideRadioState `json:"deviceRadioState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeviceRadioState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeviceRadioState") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeviceWidePolicies) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceWidePolicies
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeviceWideRadioState: Controls for device radio settings.
+type DeviceWideRadioState struct {
+	// Nfc: Optional. Controls whether NFC is disabled on the device and if the
+	// user can toggle NFC between enabled and disabled. This is for work profiles
+	// on company-owned devices. To control NFC on fully managed devices, use
+	// deviceRadioState.nfc instead.
+	//
+	// Possible values:
+	//   "NFC_UNSPECIFIED" - Unspecified. Defaults to NFC_USER_CHOICE.
+	//   "NFC_USER_CHOICE" - The user is allowed to toggle NFC between enabled and
+	// disabled. A NonComplianceDetail with API_LEVEL is reported if the Android
+	// version is less than 15.
+	//   "NFC_DISABLED" - NFC is disabled on the device. The user is not allowed to
+	// toggle NFC on. This is supported on fully managed devices and work profiles
+	// on company-owned devices. For other management modes, a NonComplianceDetail
+	// with MANAGEMENT_MODE is reported. A NonComplianceDetail with API_LEVEL is
+	// reported if the Android version is less than 15.
+	Nfc string `json:"nfc,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Nfc") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Nfc") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeviceWideRadioState) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceWideRadioState
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6723,6 +6798,9 @@ type Policy struct {
 	// DeviceRadioState: Optional. Covers controls for radio state such as Wi-Fi,
 	// bluetooth, and more.
 	DeviceRadioState *DeviceRadioState `json:"deviceRadioState,omitempty"`
+	// DeviceWidePolicies: Optional. Policies controlling the device on
+	// company-owned devices.
+	DeviceWidePolicies *DeviceWidePolicies `json:"deviceWidePolicies,omitempty"`
 	// DisplaySettings: Optional. Controls for the display settings.
 	DisplaySettings *DisplaySettings `json:"displaySettings,omitempty"`
 	// EncryptionPolicy: Whether encryption is enabled

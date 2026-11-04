@@ -2913,7 +2913,7 @@
       }
     }
   },
-  "revision": "20261018",
+  "revision": "20261026",
   "rootUrl": "https://cloudresourcemanager.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -4057,6 +4057,21 @@
           },
           "description": "Optional. The labels associated with this project. Label keys must be between 1 and 63 characters long and must conform to the following regular expression: \\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?. Label values must be between 0 and 63 characters long and must conform to the regular expression (\\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?)?. No more than 64 labels can be associated with a given resource. Clients should store labels in a representation such as JSON that does not depend on specific characters being disallowed. Example: `\"myBusinessDimension\" : \"businessValue\"`",
           "type": "object"
+        },
+        "managementType": {
+          "description": "Output only. The type of Management Project. This field is only populated if `is_management_project` is `true`.",
+          "enum": [
+            "MANAGEMENT_TYPE_UNSPECIFIED",
+            "SELF_MANAGED",
+            "HUB"
+          ],
+          "enumDescriptions": [
+            "Unspecified type.",
+            "The Management Project is a self-managed project that constitutes its own boundary.",
+            "The Management Project is a hub project that manages resources across a boundary."
+          ],
+          "readOnly": true,
+          "type": "string"
         },
         "name": {
           "description": "Output only. The unique resource name of the project. It is an int64 generated number prefixed by \"projects/\". Example: `projects/415104041262`",

@@ -1990,6 +1990,14 @@ type GoogleCloudDiscoveryengineV1ActionConfig struct {
 	// CreateBapConnection: Optional. Whether to create a BAP connection for the
 	// connector.
 	CreateBapConnection bool `json:"createBapConnection,omitempty"`
+	// CustomerManagedScopes: Optional. Customer-supplied OAuth scopes for
+	// connectors that opt into customer- managed scopes via
+	// ConnectorSource.enable_customer_managed_scopes. When non-empty on an
+	// opted-in connector, this list **replaces** the connector's built-in per-tool
+	// scopes: the OAuth authorization URL requests exactly these scopes for every
+	// operation, and the built-in scopes are never merged in. Ignored for
+	// connectors that do not opt in.
+	CustomerManagedScopes []string `json:"customerManagedScopes,omitempty"`
 	// IsActionConfigured: Output only. The connector contains the necessary
 	// parameters and is configured to support actions.
 	IsActionConfigured bool `json:"isActionConfigured,omitempty"`
@@ -3743,8 +3751,7 @@ func (s GoogleCloudDiscoveryengineV1DataConnector) MarshalJSON() ([]byte, error)
 // description, short_description, author, note).
 type GoogleCloudDiscoveryengineV1DataConnectorConnectorMetadata struct {
 	// Author: Optional. The party that authored the connector, e.g. "Google" or a
-	// third-party provider name. Lets end users see who authored a connector
-	// (future: third-party-authored connectors).
+	// third-party provider name. Lets end users see who authored a connector.
 	Author string `json:"author,omitempty"`
 	// Description: Optional. Human-readable description of the connector, shown on
 	// the connector detail page. One connector has a single description.
@@ -4348,8 +4355,8 @@ type GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigThirdPartyOauthCo
 	// AppName: Optional. The type of the application. E.g., "jira", "box", etc.
 	AppName string `json:"appName,omitempty"`
 	// InstanceName: Optional. The instance name identifying the 3P app, e.g.,
-	// "vaissptbots-my". This is different from the instance_uri which is the full
-	// URL of the 3P app e.g., "https://vaissptbots-my.sharepoint.com".
+	// "-my". This is different from the instance_uri which is the full URL of the
+	// 3P app e.g., "https://-my.sharepoint.com".
 	InstanceName string `json:"instanceName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppName") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4911,6 +4918,9 @@ type GoogleCloudDiscoveryengineV1DynamicTool struct {
 	Enabled bool `json:"enabled,omitempty"`
 	// Name: Required. The name of the tool.
 	Name string `json:"name,omitempty"`
+	// Readonly: Optional. Indicates whether the tool is read-only and does not
+	// perform write operations.
+	Readonly bool `json:"readonly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5011,12 +5021,20 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// associated here. Note that when used in CreateEngineRequest, one DataStore
 	// id must be provided as the system will use it for necessary initializations.
 	DataStoreIds []string `json:"dataStoreIds,omitempty"`
+	// DelayedGlobalFeatureToggleStateAllowed: Output only. Whether the project is
+	// allowed to set `global_feature_toggle_state` to `DELAYED`.
+	DelayedGlobalFeatureToggleStateAllowed bool `json:"delayedGlobalFeatureToggleStateAllowed,omitempty"`
 	// DisableAnalytics: Optional. Whether to disable analytics for searches
 	// performed on this engine.
 	DisableAnalytics bool `json:"disableAnalytics,omitempty"`
 	// DisplayName: Required. The display name of the engine. Should be human
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
+	// EffectiveFeatures: Output only. The complete, server-resolved state of every
+	// known feature toggle. Unlike `features`, which stores only explicit admin
+	// overrides, this map always contains an entry for every toggle. Clients
+	// should read toggle state from this field.
+	EffectiveFeatures map[string]string `json:"effectiveFeatures,omitempty"`
 	// Features: Optional. Feature config for the engine to opt in or opt out of
 	// features. Supported keys: * `*`: all features, if it's present, all other
 	// feature state settings are ignored. * `agent-gallery` *
@@ -5025,16 +5043,31 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` *
 	// `personalization-memory` * `personalization-suggested-highlights` *
 	// `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` *
-	// `disable-video-generation` * `disable-onedrive-upload` *
-	// `disable-talk-to-content` * `disable-google-drive-upload` *
-	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
-	// `canvas-app-builder` * `skills` * `skill-sharing` *
+	// `disable-video-generation` * `music-generation` * `speech-generation` *
+	// `disable-onedrive-upload` * `disable-talk-to-content` *
+	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
+	// * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` *
 	// `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` *
 	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
 	// `multi-agent-orchestration` * `cross-product-intelligence` *
 	// `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm`
-	// * `license-tier-badge`
+	// * `license-tier-badge` * `agent-marketplace` * `agent-scheduling` *
+	// `preview-agents`
 	Features map[string]string `json:"features,omitempty"`
+	// GlobalFeatureToggleState: Optional. Controls the global feature toggle state
+	// for the engine.
+	//
+	// Possible values:
+	//   "GLOBAL_FEATURE_TOGGLE_STATE_UNSPECIFIED" - Unspecified feature toggle
+	// state. Treated as `GENERAL`.
+	//   "DELAYED" - Gets features and models 4 weeks post GA. Features will be ON
+	// at the 4 weeks mark post GA.
+	//   "SCHEDULED" - Gets features and models 2 weeks post GA. Features will be
+	// ON at the 2 weeks mark post GA.
+	//   "GENERAL" - Gets features and models at GA. Features will be ON at GA.
+	//   "EARLY" - Gets features and models at EAP (if in EAP). Features will only
+	// be ON if the project is allowlisted.
+	GlobalFeatureToggleState string `json:"globalFeatureToggleState,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
 	// Vertical on Engine has to match vertical of the DataStore linked to the
@@ -6026,8 +6059,7 @@ type GoogleCloudDiscoveryengineV1LicenseConfig struct {
 	// it reaches the end date.
 	AutoRenew bool `json:"autoRenew,omitempty"`
 	// EarlyTerminated: Output only. Indication of whether the subscription is
-	// terminated earlier than the expiration date. This is usually terminated by
-	// pipeline once the subscription gets terminated from subsv3.
+	// terminated earlier than the expiration date.
 	EarlyTerminated bool `json:"earlyTerminated,omitempty"`
 	// EarlyTerminationDate: Output only. The date when the subscription is
 	// terminated earlier than the expiration date.
@@ -6190,6 +6222,16 @@ type GoogleCloudDiscoveryengineV1Project struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// CustomerProvidedConfig: Optional. Customer provided configurations.
 	CustomerProvidedConfig *GoogleCloudDiscoveryengineV1ProjectCustomerProvidedConfig `json:"customerProvidedConfig,omitempty"`
+	// ExperienceState: Output only. The current experience state of the project.
+	//
+	// Possible values:
+	//   "EXPERIENCE_STATE_UNSPECIFIED" - No experience is stated for this
+	// location.
+	//   "SOBI_ONLY" - Only the new Gemini Enterprise experience.
+	//   "LEGACY_ONLY" - Only the classic Gemini Enterprise experience.
+	//   "LEGACY_AND_SOBI" - Legacy engines serve the classic experience, the Sobi
+	// engine serves the Sobi experience.
+	ExperienceState string `json:"experienceState,omitempty"`
 	// Name: Output only. Full resource name of the project, for example
 	// `projects/{project}`. Note that when making requests, project number and
 	// project id are both acceptable, but the server will always respond in
@@ -7968,6 +8010,14 @@ type GoogleCloudDiscoveryengineV1alphaActionConfig struct {
 	// CreateBapConnection: Optional. Whether to create a BAP connection for the
 	// connector.
 	CreateBapConnection bool `json:"createBapConnection,omitempty"`
+	// CustomerManagedScopes: Optional. Customer-supplied OAuth scopes for
+	// connectors that opt into customer- managed scopes via
+	// ConnectorSource.enable_customer_managed_scopes. When non-empty on an
+	// opted-in connector, this list **replaces** the connector's built-in per-tool
+	// scopes: the OAuth authorization URL requests exactly these scopes for every
+	// operation, and the built-in scopes are never merged in. Ignored for
+	// connectors that do not opt in.
+	CustomerManagedScopes []string `json:"customerManagedScopes,omitempty"`
 	// IsActionConfigured: Output only. The connector contains the necessary
 	// parameters and is configured to support actions.
 	IsActionConfigured bool `json:"isActionConfigured,omitempty"`
@@ -9640,6 +9690,13 @@ type GoogleCloudDiscoveryengineV1alphaAssistAnswer struct {
 	//   "CANCELLED" - Assist operation has been cancelled (e.g. client closed the
 	// stream). May contain a partial response.
 	State string `json:"state,omitempty"`
+	// ToolDisplayNames: Output only. Maps a tool name (for example,
+	// `Internal-KB-Search` or `custom_mcp__agent__Internal-KB-Search`) to its
+	// human-readable display title (for example, `@Internal-KB Search`), populated
+	// from MCP tool `title` or `annotations.title` metadata so user-facing
+	// surfaces can display the tool title instead of the raw function declaration
+	// identifier. Empty when no tool display titles are present.
+	ToolDisplayNames map[string]string `json:"toolDisplayNames,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AssistSkippedReasons") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -11671,8 +11728,7 @@ func (s GoogleCloudDiscoveryengineV1alphaDataConnector) MarshalJSON() ([]byte, e
 // description, short_description, author, note).
 type GoogleCloudDiscoveryengineV1alphaDataConnectorConnectorMetadata struct {
 	// Author: Optional. The party that authored the connector, e.g. "Google" or a
-	// third-party provider name. Lets end users see who authored a connector
-	// (future: third-party-authored connectors).
+	// third-party provider name. Lets end users see who authored a connector.
 	Author string `json:"author,omitempty"`
 	// Description: Optional. Human-readable description of the connector, shown on
 	// the connector detail page. One connector has a single description.
@@ -12289,8 +12345,8 @@ type GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigThirdPartyOa
 	// AppName: Optional. The type of the application. E.g., "jira", "box", etc.
 	AppName string `json:"appName,omitempty"`
 	// InstanceName: Optional. The instance name identifying the 3P app, e.g.,
-	// "vaissptbots-my". This is different from the instance_uri which is the full
-	// URL of the 3P app e.g., "https://vaissptbots-my.sharepoint.com".
+	// "-my". This is different from the instance_uri which is the full URL of the
+	// 3P app e.g., "https://-my.sharepoint.com".
 	InstanceName string `json:"instanceName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppName") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -13007,6 +13063,9 @@ type GoogleCloudDiscoveryengineV1alphaDynamicTool struct {
 	Enabled bool `json:"enabled,omitempty"`
 	// Name: Required. The name of the tool.
 	Name string `json:"name,omitempty"`
+	// Readonly: Optional. Indicates whether the tool is read-only and does not
+	// perform write operations.
+	Readonly bool `json:"readonly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -13107,12 +13166,20 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// associated here. Note that when used in CreateEngineRequest, one DataStore
 	// id must be provided as the system will use it for necessary initializations.
 	DataStoreIds []string `json:"dataStoreIds,omitempty"`
+	// DelayedGlobalFeatureToggleStateAllowed: Output only. Whether the project is
+	// allowed to set `global_feature_toggle_state` to `DELAYED`.
+	DelayedGlobalFeatureToggleStateAllowed bool `json:"delayedGlobalFeatureToggleStateAllowed,omitempty"`
 	// DisableAnalytics: Optional. Whether to disable analytics for searches
 	// performed on this engine.
 	DisableAnalytics bool `json:"disableAnalytics,omitempty"`
 	// DisplayName: Required. The display name of the engine. Should be human
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
+	// EffectiveFeatures: Output only. The complete, server-resolved state of every
+	// known feature toggle. Unlike `features`, which stores only explicit admin
+	// overrides, this map always contains an entry for every toggle. Clients
+	// should read toggle state from this field.
+	EffectiveFeatures map[string]string `json:"effectiveFeatures,omitempty"`
 	// Features: Optional. Feature config for the engine to opt in or opt out of
 	// features. Supported keys: * `*`: all features, if it's present, all other
 	// feature state settings are ignored. * `agent-gallery` *
@@ -13121,16 +13188,31 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` *
 	// `personalization-memory` * `personalization-suggested-highlights` *
 	// `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` *
-	// `disable-video-generation` * `disable-onedrive-upload` *
-	// `disable-talk-to-content` * `disable-google-drive-upload` *
-	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
-	// `canvas-app-builder` * `skills` * `skill-sharing` *
+	// `disable-video-generation` * `music-generation` * `speech-generation` *
+	// `disable-onedrive-upload` * `disable-talk-to-content` *
+	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
+	// * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` *
 	// `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` *
 	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
 	// `multi-agent-orchestration` * `cross-product-intelligence` *
 	// `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm`
-	// * `license-tier-badge`
+	// * `license-tier-badge` * `agent-marketplace` * `agent-scheduling` *
+	// `preview-agents`
 	Features map[string]string `json:"features,omitempty"`
+	// GlobalFeatureToggleState: Optional. Controls the global feature toggle state
+	// for the engine.
+	//
+	// Possible values:
+	//   "GLOBAL_FEATURE_TOGGLE_STATE_UNSPECIFIED" - Unspecified feature toggle
+	// state. Treated as `GENERAL`.
+	//   "DELAYED" - Gets features and models 4 weeks post GA. Features will be ON
+	// at the 4 weeks mark post GA.
+	//   "SCHEDULED" - Gets features and models 2 weeks post GA. Features will be
+	// ON at the 2 weeks mark post GA.
+	//   "GENERAL" - Gets features and models at GA. Features will be ON at GA.
+	//   "EARLY" - Gets features and models at EAP (if in EAP). Features will only
+	// be ON if the project is allowlisted.
+	GlobalFeatureToggleState string `json:"globalFeatureToggleState,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
 	// Vertical on Engine has to match vertical of the DataStore linked to the
@@ -14805,8 +14887,7 @@ type GoogleCloudDiscoveryengineV1alphaLicenseConfig struct {
 	// this field is set.
 	BillingAccountLicenseConfig string `json:"billingAccountLicenseConfig,omitempty"`
 	// EarlyTerminated: Output only. Indication of whether the subscription is
-	// terminated earlier than the expiration date. This is usually terminated by
-	// pipeline once the subscription gets terminated from subsv3.
+	// terminated earlier than the expiration date.
 	EarlyTerminated bool `json:"earlyTerminated,omitempty"`
 	// EarlyTerminationDate: Output only. The date when the subscription is
 	// terminated earlier than the expiration date.
@@ -15147,6 +15228,16 @@ type GoogleCloudDiscoveryengineV1alphaProject struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// CustomerProvidedConfig: Optional. Customer provided configurations.
 	CustomerProvidedConfig *GoogleCloudDiscoveryengineV1alphaProjectCustomerProvidedConfig `json:"customerProvidedConfig,omitempty"`
+	// ExperienceState: Output only. The current experience state of the project.
+	//
+	// Possible values:
+	//   "EXPERIENCE_STATE_UNSPECIFIED" - No experience is stated for this
+	// location.
+	//   "SOBI_ONLY" - Only the new Gemini Enterprise experience.
+	//   "LEGACY_ONLY" - Only the classic Gemini Enterprise experience.
+	//   "LEGACY_AND_SOBI" - Legacy engines serve the classic experience, the Sobi
+	// engine serves the Sobi experience.
+	ExperienceState string `json:"experienceState,omitempty"`
 	// Name: Output only. Full resource name of the project, for example
 	// `projects/{project}`. Note that when making requests, project number and
 	// project id are both acceptable, but the server will always respond in
@@ -21524,6 +21615,13 @@ type GoogleCloudDiscoveryengineV1betaAssistAnswer struct {
 	//   "CANCELLED" - Assist operation has been cancelled (e.g. client closed the
 	// stream). May contain a partial response.
 	State string `json:"state,omitempty"`
+	// ToolDisplayNames: Output only. Maps a tool name (for example,
+	// `Internal-KB-Search` or `custom_mcp__agent__Internal-KB-Search`) to its
+	// human-readable display title (for example, `@Internal-KB Search`), populated
+	// from MCP tool `title` or `annotations.title` metadata so user-facing
+	// surfaces can display the tool title instead of the raw function declaration
+	// identifier. Empty when no tool display titles are present.
+	ToolDisplayNames map[string]string `json:"toolDisplayNames,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AssistSkippedReasons") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -24928,8 +25026,8 @@ type GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigThirdPartyOau
 	// AppName: Optional. The type of the application. E.g., "jira", "box", etc.
 	AppName string `json:"appName,omitempty"`
 	// InstanceName: Optional. The instance name identifying the 3P app, e.g.,
-	// "vaissptbots-my". This is different from the instance_uri which is the full
-	// URL of the 3P app e.g., "https://vaissptbots-my.sharepoint.com".
+	// "-my". This is different from the instance_uri which is the full URL of the
+	// 3P app e.g., "https://-my.sharepoint.com".
 	InstanceName string `json:"instanceName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppName") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -25882,12 +25980,20 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// associated here. Note that when used in CreateEngineRequest, one DataStore
 	// id must be provided as the system will use it for necessary initializations.
 	DataStoreIds []string `json:"dataStoreIds,omitempty"`
+	// DelayedGlobalFeatureToggleStateAllowed: Output only. Whether the project is
+	// allowed to set `global_feature_toggle_state` to `DELAYED`.
+	DelayedGlobalFeatureToggleStateAllowed bool `json:"delayedGlobalFeatureToggleStateAllowed,omitempty"`
 	// DisableAnalytics: Optional. Whether to disable analytics for searches
 	// performed on this engine.
 	DisableAnalytics bool `json:"disableAnalytics,omitempty"`
 	// DisplayName: Required. The display name of the engine. Should be human
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
+	// EffectiveFeatures: Output only. The complete, server-resolved state of every
+	// known feature toggle. Unlike `features`, which stores only explicit admin
+	// overrides, this map always contains an entry for every toggle. Clients
+	// should read toggle state from this field.
+	EffectiveFeatures map[string]string `json:"effectiveFeatures,omitempty"`
 	// Features: Optional. Feature config for the engine to opt in or opt out of
 	// features. Supported keys: * `*`: all features, if it's present, all other
 	// feature state settings are ignored. * `agent-gallery` *
@@ -25896,16 +26002,31 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` *
 	// `personalization-memory` * `personalization-suggested-highlights` *
 	// `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` *
-	// `disable-video-generation` * `disable-onedrive-upload` *
-	// `disable-talk-to-content` * `disable-google-drive-upload` *
-	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
-	// `canvas-app-builder` * `skills` * `skill-sharing` *
+	// `disable-video-generation` * `music-generation` * `speech-generation` *
+	// `disable-onedrive-upload` * `disable-talk-to-content` *
+	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
+	// * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` *
 	// `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` *
 	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
 	// `multi-agent-orchestration` * `cross-product-intelligence` *
 	// `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm`
-	// * `license-tier-badge`
+	// * `license-tier-badge` * `agent-marketplace` * `agent-scheduling` *
+	// `preview-agents`
 	Features map[string]string `json:"features,omitempty"`
+	// GlobalFeatureToggleState: Optional. Controls the global feature toggle state
+	// for the engine.
+	//
+	// Possible values:
+	//   "GLOBAL_FEATURE_TOGGLE_STATE_UNSPECIFIED" - Unspecified feature toggle
+	// state. Treated as `GENERAL`.
+	//   "DELAYED" - Gets features and models 4 weeks post GA. Features will be ON
+	// at the 4 weeks mark post GA.
+	//   "SCHEDULED" - Gets features and models 2 weeks post GA. Features will be
+	// ON at the 2 weeks mark post GA.
+	//   "GENERAL" - Gets features and models at GA. Features will be ON at GA.
+	//   "EARLY" - Gets features and models at EAP (if in EAP). Features will only
+	// be ON if the project is allowlisted.
+	GlobalFeatureToggleState string `json:"globalFeatureToggleState,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
 	// Vertical on Engine has to match vertical of the DataStore linked to the
@@ -27992,8 +28113,7 @@ type GoogleCloudDiscoveryengineV1betaLicenseConfig struct {
 	// it reaches the end date.
 	AutoRenew bool `json:"autoRenew,omitempty"`
 	// EarlyTerminated: Output only. Indication of whether the subscription is
-	// terminated earlier than the expiration date. This is usually terminated by
-	// pipeline once the subscription gets terminated from subsv3.
+	// terminated earlier than the expiration date.
 	EarlyTerminated bool `json:"earlyTerminated,omitempty"`
 	// EarlyTerminationDate: Output only. The date when the subscription is
 	// terminated earlier than the expiration date.
@@ -29080,6 +29200,16 @@ type GoogleCloudDiscoveryengineV1betaProject struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// CustomerProvidedConfig: Optional. Customer provided configurations.
 	CustomerProvidedConfig *GoogleCloudDiscoveryengineV1betaProjectCustomerProvidedConfig `json:"customerProvidedConfig,omitempty"`
+	// ExperienceState: Output only. The current experience state of the project.
+	//
+	// Possible values:
+	//   "EXPERIENCE_STATE_UNSPECIFIED" - No experience is stated for this
+	// location.
+	//   "SOBI_ONLY" - Only the new Gemini Enterprise experience.
+	//   "LEGACY_ONLY" - Only the classic Gemini Enterprise experience.
+	//   "LEGACY_AND_SOBI" - Legacy engines serve the classic experience, the Sobi
+	// engine serves the Sobi experience.
+	ExperienceState string `json:"experienceState,omitempty"`
 	// Name: Output only. Full resource name of the project, for example
 	// `projects/{project}`. Note that when making requests, project number and
 	// project id are both acceptable, but the server will always respond in
@@ -29493,6 +29623,16 @@ type GoogleCloudDiscoveryengineV1betaProvisionProjectRequest struct {
 	// IdpConfig: Optional. The identity provider for this location. When provided,
 	// the location's AclConfig is set from it as part of provisioning.
 	IdpConfig *GoogleCloudDiscoveryengineV1betaIdpConfig `json:"idpConfig,omitempty"`
+	// ProvisionIntent: Optional. The caller states whether the provisioning is for
+	// the new or the classic Gemini Enterprise experience.
+	//
+	// Possible values:
+	//   "PROVISION_INTENT_UNSPECIFIED" - Unspecified.
+	//   "PROVISION_INTENT_SOBI" - The caller is provisioning for the new Gemini
+	// Enterprise experience.
+	//   "PROVISION_INTENT_LEGACY" - The caller is provisioning for the classic
+	// Gemini Enterprise experience.
+	ProvisionIntent string `json:"provisionIntent,omitempty"`
 	// SaasParams: Optional. Parameters for Agentspace.
 	SaasParams *GoogleCloudDiscoveryengineV1betaProvisionProjectRequestSaasParams `json:"saasParams,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AcceptDataUseTerms") to
