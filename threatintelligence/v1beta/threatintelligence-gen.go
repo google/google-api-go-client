@@ -752,6 +752,32 @@ func (s CustomThreatScenarioConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CustomerProfileBrand: Brand information for the customer profile.
+type CustomerProfileBrand struct {
+	// Brand: Required. The name of the brand.
+	Brand string `json:"brand,omitempty"`
+	// CitationIds: Optional. The citation ids for the brand.
+	CitationIds []string `json:"citationIds,omitempty"`
+	// Id: Optional. The unique identifier for the brand.
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Brand") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Brand") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomerProfileBrand) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomerProfileBrand
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CustomerProfileCitation: Citation information for the customer profile.
 type CustomerProfileCitation struct {
 	// CitationId: Required. The citation id for the citation. Should be unique
@@ -834,6 +860,8 @@ func (s CustomerProfileCompany) MarshalJSON() ([]byte, error) {
 // CustomerProfileConfig: CustomerProfileConfig is the configuration for the
 // customer profile.
 type CustomerProfileConfig struct {
+	// Brands: Optional. Brands associated with the organization.
+	Brands []*CustomerProfileBrand `json:"brands,omitempty"`
 	// Citations: Optional. Citations for the organization profile.
 	Citations []*CustomerProfileCitation `json:"citations,omitempty"`
 	// ContactInfo: Optional. Contact information for the organization.
@@ -864,13 +892,13 @@ type CustomerProfileConfig struct {
 	TechnologyPresence string `json:"technologyPresence,omitempty"`
 	// WebPresences: Optional. Web presence of the organization.
 	WebPresences []*CustomerProfileWebPresence `json:"webPresences,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Citations") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Brands") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Citations") to include in API
+	// NullFields is a list of field names (e.g. "Brands") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

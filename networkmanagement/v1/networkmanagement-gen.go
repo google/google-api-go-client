@@ -1608,6 +1608,12 @@ type Endpoint struct {
 	CloudRunRevision *CloudRunRevisionEndpoint `json:"cloudRunRevision,omitempty"`
 	// CloudSqlInstance: A Cloud SQL (https://cloud.google.com/sql) instance URI.
 	CloudSqlInstance string `json:"cloudSqlInstance,omitempty"`
+	// DatastreamPrivateConnection: A Datastream Private Connection
+	// (https://docs.cloud.google.com/datastream/docs/reference/rest/v1/projects.locations.privateConnections)
+	// name format:
+	// projects/{project}/locations/{location}/privateConnections/{privateConnection
+	// }.
+	DatastreamPrivateConnection string `json:"datastreamPrivateConnection,omitempty"`
 	// DmsPrivateConnection: A DMS Private Connection
 	// (https://docs.cloud.google.com/database-migration/docs/reference/rest/v1/projects.locations.privateConnections)
 	// name format:

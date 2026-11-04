@@ -1265,7 +1265,7 @@
       }
     }
   },
-  "revision": "20261028",
+  "revision": "20261102",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdbShellCommandEvent": {
@@ -3698,6 +3698,20 @@
           ],
           "type": "string"
         },
+        "nfc": {
+          "description": "Optional. Controls whether NFC is disabled on the device and if the user can toggle NFC between enabled and disabled. This is for fully managed devices. To control NFC on work profiles on company-owned devices, use deviceWidePolicies.deviceRadioState.nfc instead.",
+          "enum": [
+            "NFC_UNSPECIFIED",
+            "NFC_USER_CHOICE",
+            "NFC_DISABLED"
+          ],
+          "enumDescriptions": [
+            "Unspecified. Defaults to NFC_USER_CHOICE.",
+            "The user is allowed to toggle NFC between enabled and disabled. A NonComplianceDetail with API_LEVEL is reported if the Android version is less than 15.",
+            "NFC is disabled on the device. The user is not allowed to toggle NFC on. This is supported on fully managed devices and work profiles on company-owned devices. For other management modes, a NonComplianceDetail with MANAGEMENT_MODE is reported. A NonComplianceDetail with API_LEVEL is reported if the Android version is less than 15."
+          ],
+          "type": "string"
+        },
         "ultraWidebandState": {
           "description": "Optional. Controls the state of the ultra wideband setting and whether the user can toggle it on or off.",
           "enum": [
@@ -3794,6 +3808,38 @@
         "verifyAppsEnabled": {
           "description": "Whether Google Play Protect verification (https://support.google.com/accounts/answer/2812853) is enforced on the device.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "DeviceWidePolicies": {
+      "description": "Policies controlling the device on company-owned devices.",
+      "id": "DeviceWidePolicies",
+      "properties": {
+        "deviceRadioState": {
+          "$ref": "DeviceWideRadioState",
+          "description": "Optional. Covers controls for radio state."
+        }
+      },
+      "type": "object"
+    },
+    "DeviceWideRadioState": {
+      "description": "Controls for device radio settings.",
+      "id": "DeviceWideRadioState",
+      "properties": {
+        "nfc": {
+          "description": "Optional. Controls whether NFC is disabled on the device and if the user can toggle NFC between enabled and disabled. This is for work profiles on company-owned devices. To control NFC on fully managed devices, use deviceRadioState.nfc instead.",
+          "enum": [
+            "NFC_UNSPECIFIED",
+            "NFC_USER_CHOICE",
+            "NFC_DISABLED"
+          ],
+          "enumDescriptions": [
+            "Unspecified. Defaults to NFC_USER_CHOICE.",
+            "The user is allowed to toggle NFC between enabled and disabled. A NonComplianceDetail with API_LEVEL is reported if the Android version is less than 15.",
+            "NFC is disabled on the device. The user is not allowed to toggle NFC on. This is supported on fully managed devices and work profiles on company-owned devices. For other management modes, a NonComplianceDetail with MANAGEMENT_MODE is reported. A NonComplianceDetail with API_LEVEL is reported if the Android version is less than 15."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -6444,6 +6490,10 @@
         "deviceRadioState": {
           "$ref": "DeviceRadioState",
           "description": "Optional. Covers controls for radio state such as Wi-Fi, bluetooth, and more."
+        },
+        "deviceWidePolicies": {
+          "$ref": "DeviceWidePolicies",
+          "description": "Optional. Policies controlling the device on company-owned devices."
         },
         "displaySettings": {
           "$ref": "DisplaySettings",

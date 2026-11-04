@@ -6,7 +6,7 @@
 
 // Package places provides access to the Places API (New).
 //
-// For product documentation, see: https://mapsplatform.google.com/maps-products/#places-section
+// For product documentation, see: https://developers.google.com/maps/documentation/places/web-service
 //
 // # Library status
 //

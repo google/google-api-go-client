@@ -1888,6 +1888,9 @@ type ClusterConfig struct {
 	MasterFlexibleConfig *FlexibleInstanceGroupConfig `json:"masterFlexibleConfig,omitempty"`
 	// MetastoreConfig: Optional. Metastore configuration.
 	MetastoreConfig *MetastoreConfig `json:"metastoreConfig,omitempty"`
+	// SchedulingConfig: Optional. Config for scheduling the resources to be
+	// allocated when available.
+	SchedulingConfig *SchedulingConfig `json:"schedulingConfig,omitempty"`
 	// SecondaryWorkerConfig: Optional. The Compute Engine config settings for a
 	// cluster's secondary worker instances
 	SecondaryWorkerConfig *InstanceGroupConfig `json:"secondaryWorkerConfig,omitempty"`
@@ -6674,6 +6677,37 @@ type RuntimeInfo struct {
 
 func (s RuntimeInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod RuntimeInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SchedulingConfig: Config for scheduling the request to create Compute Engine
+// resources for the cluster, when available.
+type SchedulingConfig struct {
+	// RequestedRunDuration: Optional. Required lifetime of the resources, once
+	// provisioned. Min 10 mins, Max/Default 7 days . Note that the cluster can
+	// still be deleted before reaching this time. This time is a maximum amount of
+	// time before the cluster is forcibly deleted. Lower times are more likely to
+	// start running sooner.
+	RequestedRunDuration string `json:"requestedRunDuration,omitempty"`
+	// SchedulingTimeout: Optional. How long to wait for worker resources to be
+	// allocated before failing the cluster creation request. Max/Default value: 13
+	// days
+	SchedulingTimeout string `json:"schedulingTimeout,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequestedRunDuration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequestedRunDuration") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SchedulingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SchedulingConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

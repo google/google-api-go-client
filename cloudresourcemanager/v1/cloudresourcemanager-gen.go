@@ -1746,6 +1746,16 @@ type Project struct {
 	//   "DELETE_IN_PROGRESS" - This lifecycle state is no longer used and not
 	// returned by the API.
 	LifecycleState string `json:"lifecycleState,omitempty"`
+	// ManagementType: Output only. The type of Management Project. This field is
+	// only populated if `is_management_project` is `true`.
+	//
+	// Possible values:
+	//   "MANAGEMENT_TYPE_UNSPECIFIED" - Unspecified type.
+	//   "SELF_MANAGED" - The Management Project is a self-managed project that
+	// constitutes its own boundary.
+	//   "HUB" - The Management Project is a hub project that manages resources
+	// across a boundary.
+	ManagementType string `json:"managementType,omitempty"`
 	// Name: The optional user-assigned display name of the Project. When present
 	// it must be between 4 to 30 characters. Allowed characters are: lowercase and
 	// uppercase letters, numbers, hyphen, single-quote, double-quote, space, and
