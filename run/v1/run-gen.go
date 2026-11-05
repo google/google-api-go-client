@@ -688,6 +688,32 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BuildStatus: BuildStatus holds the status of a build.
+type BuildStatus struct {
+	// CloudBuildLogUrl: The log URL for the Cloud Build execution.
+	CloudBuildLogUrl string `json:"cloudBuildLogUrl,omitempty"`
+	// Message: The message details of the build.
+	Message string `json:"message,omitempty"`
+	// Status: The status of the build.
+	Status string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudBuildLogUrl") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudBuildLogUrl") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BuildStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod BuildStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CSIVolumeSource: Storage volume source using the Container Storage
 // Interface.
 type CSIVolumeSource struct {
@@ -1086,6 +1112,36 @@ type ContainerPort struct {
 
 func (s ContainerPort) MarshalJSON() ([]byte, error) {
 	type NoMethod ContainerPort
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ContainerStatus: ContainerStatus holds the information of container name and
+// image digest value.
+type ContainerStatus struct {
+	// BuildStatus: Output only. The build status of the container image.
+	BuildStatus *BuildStatus `json:"buildStatus,omitempty"`
+	// ImageDigest: ImageDigest holds the resolved digest for the image specified
+	// and resolved during the creation of Revision. This field holds the digest
+	// value regardless of whether a tag or digest was originally specified in the
+	// Container object.
+	ImageDigest string `json:"imageDigest,omitempty"`
+	// Name: The name of the container, if specified.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BuildStatus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BuildStatus") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ContainerStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod ContainerStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1601,6 +1657,30 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// FilestoreVolumeSource: Represents a volume backed by a Filestore instance.
+type FilestoreVolumeSource struct {
+	// Volume: Required. The resource name of the Filestore volume. Format:
+	// `projects/{project}/locations/{location}/volumePools/{volume_pool}/volumes/{v
+	// olume}`
+	Volume string `json:"volume,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Volume") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Volume") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FilestoreVolumeSource) MarshalJSON() ([]byte, error) {
+	type NoMethod FilestoreVolumeSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GRPCAction: GRPCAction describes an action involving a GRPC port.
 type GRPCAction struct {
 	// Port: Port number of the gRPC service. Number must be in the range 1 to
@@ -2050,8 +2130,8 @@ type GoogleDevtoolsCloudbuildV1BuildOptions struct {
 	//   "REGIONAL_USER_OWNED_BUCKET" - Bucket is located in user-owned project in
 	// the same region as the build. The builder service account must have access
 	// to create and write to Cloud Storage buckets in the build project.
-	//   "LEGACY_BUCKET" - Bucket is located in a Google-owned project and is not
-	// regionalized.
+	//   "LEGACY_BUCKET" - Deprecated: Use `REGIONAL_USER_OWNED_BUCKET` instead.
+	// Bucket is located in a Google-owned project and is not regionalized.
 	DefaultLogsBucketBehavior string `json:"defaultLogsBucketBehavior,omitempty"`
 	// DiskSizeGb: Requested disk size for the VM that runs the build. Note that
 	// this is *NOT* "disk free"; some of the space will be used by the operating
@@ -5174,6 +5254,9 @@ type RevisionStatus struct {
 	// provisioned. * `ContainerHealthy`: `True` when the Revision readiness check
 	// completes. * `Active`: `True` when the Revision may receive traffic.
 	Conditions []*GoogleCloudRunV1Condition `json:"conditions,omitempty"`
+	// ContainerStatuses: Output only. Status information for each of the specified
+	// containers. The status includes the resolved digest for specified images.
+	ContainerStatuses []*ContainerStatus `json:"containerStatuses,omitempty"`
 	// DesiredReplicas: Output only. The configured number of instances running
 	// this revision. For Cloud Run, this only includes instances provisioned using
 	// the minScale annotation. It does not include instances created by
@@ -6252,6 +6335,8 @@ type Volume struct {
 	Csi *CSIVolumeSource `json:"csi,omitempty"`
 	// EmptyDir: Ephemeral storage used as a shared volume.
 	EmptyDir *EmptyDirVolumeSource `json:"emptyDir,omitempty"`
+	// Filestore: Represents a volume backed by a Filestore instance.
+	Filestore *FilestoreVolumeSource `json:"filestore,omitempty"`
 	// Name: Volume's name. In Cloud Run Fully Managed, the name 'cloudsql' is
 	// reserved.
 	Name string           `json:"name,omitempty"`

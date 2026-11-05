@@ -2001,6 +2001,9 @@ func (s Interval) MarshalJSON() ([]byte, error) {
 // invocation. If both `included_targets` and `included_tags` are unset, all
 // actions will be included.
 type InvocationConfig struct {
+	// ConcurrentActionsLimit: Optional. Maximum number of actions that can be
+	// executed concurrently.
+	ConcurrentActionsLimit int64 `json:"concurrentActionsLimit,omitempty"`
 	// EndUserAuthConfig: Optional. Configuration for end user authentication. Do
 	// not set if `service_account` is used.
 	EndUserAuthConfig *EndUserAuthenticationConfig `json:"endUserAuthConfig,omitempty"`
@@ -2043,15 +2046,15 @@ type InvocationConfig struct {
 	// TransitiveDependentsIncluded: Optional. When set to true, transitive
 	// dependents of included actions will be executed.
 	TransitiveDependentsIncluded bool `json:"transitiveDependentsIncluded,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EndUserAuthConfig") to
+	// ForceSendFields is a list of field names (e.g. "ConcurrentActionsLimit") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EndUserAuthConfig") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ConcurrentActionsLimit") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4232,6 +4235,8 @@ type WorkflowInvocationAction struct {
 	//   "SUCCEEDED" - The action succeeded. A terminal state.
 	//   "CANCELLED" - The action was cancelled. A terminal state.
 	//   "FAILED" - The action failed. A terminal state.
+	//   "QUEUED" - Execution of the action was queued waiting for an available
+	// concurrency slot.
 	State string `json:"state,omitempty"`
 	// Target: Output only. This action's identifier. Unique within the workflow
 	// invocation.
