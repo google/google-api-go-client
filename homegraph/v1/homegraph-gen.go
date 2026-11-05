@@ -687,20 +687,22 @@ func (s HomeTraitUpdates) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// JsonTrait: Dynamic JSON trait state payload conforming to
-// `json_trait_schema.md`. Used for Category 2 (vendor Matter clusters) and
-// Category 3 (non-Matter capabilities) traits across all wire and internal
-// paths, and for Category 1 traits on external JSON-only wire paths (e.g.,
-// `Query` with `JSON_TRAIT_ONLY`).
+// JsonTrait: Represents a dynamic JSON trait state payload that conforms to
+// `json_trait_schema.md`. This message is used for Category 2 (vendor Matter
+// clusters) and Category 3 (non-Matter capabilities) traits across all wire
+// and internal paths, and for Category 1 traits on external JSON-only wire
+// paths (for example, `Query` with `JSON_TRAIT_ONLY`).
 type JsonTrait struct {
-	// Data: Optional. Trait attribute map conforming to the trait's registered
-	// JSON Schema.
+	// Data: Optional. Holds the trait attributes, which conform to the trait's
+	// registered JSON Schema.
 	Data googleapi.RawMessage `json:"data,omitempty"`
-	// Id: Required. Canonical symbolic trait ID per `json_trait_schema.md`: -
-	// Standard Matter (Cat 1): `matter.` (e.g., `matter.thermostat`) - Google /
-	// vendor Matter (Cat 1/2): `matter..` (e.g., `matter.google.`,
-	// `matter.eve.utility`) - Non-Matter (Cat 3, any provider incl. Google):
-	// `ghp..` (e.g., `ghp.acme.warranty`, `ghp.google.`)
+	// Id: Required. Identifies the trait by its canonical four-segment capability
+	// ID, `capability...`: * Standard or Google Matter (Category 1):
+	// `capability.matter.standard.` or `capability.matter.google.`, for example
+	// `capability.matter.standard.Thermostat`. * Vendor Matter (Category 2):
+	// `capability.matter..`. * Non-Matter (Category 3, from any provider including
+	// Google): `capability.generic..`, for example
+	// `capability.generic.acme.Warranty`.
 	Id string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -720,14 +722,16 @@ func (s JsonTrait) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// JsonTraitEvent: Dynamic JSON event payload conforming to
+// JsonTraitEvent: Represents a dynamic JSON event payload that conforms to
 // `json_trait_schema.md`.
 type JsonTraitEvent struct {
-	// Data: Optional. Event payload fields conforming to the event's registered
-	// JSON Schema.
+	// Data: Optional. Holds the event payload fields, which conform to the event's
+	// registered JSON Schema.
 	Data googleapi.RawMessage `json:"data,omitempty"`
-	// Id: Required. Fully qualified event ID: `.` (e.g.,
-	// `matter.doorLock.lockOperation`, `ghp.acme.warranty.claimUpdated`).
+	// Id: Required. Identifies the event as `.`, where `` is the PascalCase key in
+	// the schema's `x-capability-info.events`, for example
+	// `capability.matter.standard.DoorLock.LockOperation` or
+	// `capability.generic.acme.Warranty.ClaimUpdated`.
 	Id string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

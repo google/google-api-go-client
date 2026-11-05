@@ -825,6 +825,11 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ReprovisionBucketRequest: Request for reprovisioning a bucket, replaces
+// configuration with that of the configured Observability settings.
+type ReprovisionBucketRequest struct {
+}
+
 // Scope: Message describing Scope object
 type Scope struct {
 	// LogScope: Required. The full resource name of the
@@ -3985,6 +3990,113 @@ func (c *ProjectsLocationsBucketsPatchCall) Do(opts ...googleapi.CallOption) (*O
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "observability.projects.locations.buckets.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsBucketsReprovisionCall struct {
+	s                        *Service
+	name                     string
+	reprovisionbucketrequest *ReprovisionBucketRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Reprovision: Initiates reprovisioning of a bucket. This is allowed only a
+// single time for a bucket and results in data loss. Subsequent calls to this
+// method for the same bucket will result in a FAILED_PRECONDITION (400 Bad
+// Request) error.
+//
+//   - name: Name of the bucket to reprovision. The format is:
+//     projects/[PROJECT_ID]/locations/[LOCATION]/buckets/[BUCKET_ID].
+func (r *ProjectsLocationsBucketsService) Reprovision(name string, reprovisionbucketrequest *ReprovisionBucketRequest) *ProjectsLocationsBucketsReprovisionCall {
+	c := &ProjectsLocationsBucketsReprovisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.reprovisionbucketrequest = reprovisionbucketrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBucketsReprovisionCall) Fields(s ...googleapi.Field) *ProjectsLocationsBucketsReprovisionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBucketsReprovisionCall) Context(ctx context.Context) *ProjectsLocationsBucketsReprovisionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBucketsReprovisionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBucketsReprovisionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.reprovisionbucketrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:reprovision")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "observability.projects.locations.buckets.reprovision", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "observability.projects.locations.buckets.reprovision" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsBucketsReprovisionCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "observability.projects.locations.buckets.reprovision", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

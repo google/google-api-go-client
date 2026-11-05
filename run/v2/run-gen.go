@@ -410,8 +410,8 @@ type GoogleCloudRunV2BuildConfig struct {
 	// SourceLocation: The Cloud Storage bucket URI where the function source code
 	// is located.
 	SourceLocation string `json:"sourceLocation,omitempty"`
-	// WorkerPool: Optional. Name of the Cloud Build Custom Worker Pool that should
-	// be used to build the Cloud Run function. The format of this field is
+	// WorkerPool: Optional. Name of the Cloud Build private pool that should be
+	// used to build the Cloud Run function. The format of this field is
 	// `projects/{project}/locations/{region}/workerPools/{workerPool}` where
 	// `{project}` and `{region}` are the project id and region respectively where
 	// the worker pool is defined and `{workerPool}` is the short name of the
@@ -433,6 +433,71 @@ type GoogleCloudRunV2BuildConfig struct {
 func (s GoogleCloudRunV2BuildConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2BuildConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2BuildConfiguration: Build configuration for a container.
+type GoogleCloudRunV2BuildConfiguration struct {
+	// BuildpacksBuild: Optional. Builds the source using Buildpacks.
+	BuildpacksBuild *GoogleCloudRunV2BuildConfigurationBuildpacksBuild `json:"buildpacksBuild,omitempty"`
+	// DockerBuild: Optional. Builds the source using Docker.
+	DockerBuild *GoogleCloudRunV2BuildConfigurationDockerBuild `json:"dockerBuild,omitempty"`
+	// ImageRepositoryUri: Required. Artifact Registry URI to store the built
+	// image.
+	ImageRepositoryUri string `json:"imageRepositoryUri,omitempty"`
+	// ServiceAccount: Optional. The service account to use for the build. Its
+	// resource name in the format `projects/{project}/serviceAccounts/{email}`.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// Tags: Optional. Tags to add to the build.
+	Tags []string `json:"tags,omitempty"`
+	// WorkerConfiguration: Optional. Configuration for the worker.
+	WorkerConfiguration *GoogleCloudRunV2WorkerConfiguration `json:"workerConfiguration,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BuildpacksBuild") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BuildpacksBuild") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2BuildConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2BuildConfiguration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2BuildConfigurationBuildpacksBuild: Buildpacks build
+// configuration.
+type GoogleCloudRunV2BuildConfigurationBuildpacksBuild struct {
+	// BuildBaseImageUri: Optional. Specify base image other than the default.
+	BuildBaseImageUri string `json:"buildBaseImageUri,omitempty"`
+	// CacheImageUri: Optional. Cache image URI.
+	CacheImageUri string `json:"cacheImageUri,omitempty"`
+	// EnvironmentVariables: Optional. Environment variables for the build.
+	EnvironmentVariables map[string]string `json:"environmentVariables,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BuildBaseImageUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BuildBaseImageUri") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2BuildConfigurationBuildpacksBuild) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2BuildConfigurationBuildpacksBuild
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2BuildConfigurationDockerBuild: Docker build configuration.
+type GoogleCloudRunV2BuildConfigurationDockerBuild struct {
 }
 
 // GoogleCloudRunV2BuildInfo: Build information of the image.
@@ -457,6 +522,32 @@ type GoogleCloudRunV2BuildInfo struct {
 
 func (s GoogleCloudRunV2BuildInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2BuildInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2BuildStatus: BuildStatus holds the status of a build.
+type GoogleCloudRunV2BuildStatus struct {
+	// CloudBuildLogUrl: The log URL for the Cloud Build execution.
+	CloudBuildLogUrl string `json:"cloudBuildLogUrl,omitempty"`
+	// Message: The message details of the build.
+	Message string `json:"message,omitempty"`
+	// Status: The status of the build.
+	Status string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudBuildLogUrl") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudBuildLogUrl") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2BuildStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2BuildStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -529,6 +620,31 @@ type GoogleCloudRunV2CancelExecutionRequest struct {
 
 func (s GoogleCloudRunV2CancelExecutionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2CancelExecutionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2CloudBuildWorkerConfiguration: Configuration for Cloud Build
+// worker.
+type GoogleCloudRunV2CloudBuildWorkerConfiguration struct {
+	// MachineType: Optional. The machine type for the Cloud Build worker.
+	MachineType string `json:"machineType,omitempty"`
+	// WorkerPool: Optional. The name of the Cloud Build worker pool.
+	WorkerPool string `json:"workerPool,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MachineType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MachineType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2CloudBuildWorkerConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2CloudBuildWorkerConfiguration
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -732,6 +848,8 @@ type GoogleCloudRunV2Container struct {
 	// set, it indicates that the service is enrolled into automatic base image
 	// update.
 	BaseImageUri string `json:"baseImageUri,omitempty"`
+	// BuildConfig: Optional. The build configuration for the container image.
+	BuildConfig *GoogleCloudRunV2BuildConfiguration `json:"buildConfig,omitempty"`
 	// BuildInfo: Output only. The build info of the container image.
 	BuildInfo *GoogleCloudRunV2BuildInfo `json:"buildInfo,omitempty"`
 	// Command: Entrypoint array. Not executed within a shell. The docker image's
@@ -855,6 +973,8 @@ func (s GoogleCloudRunV2ContainerPort) MarshalJSON() ([]byte, error) {
 // GoogleCloudRunV2ContainerStatus: ContainerStatus holds the information of
 // container name and image digest value.
 type GoogleCloudRunV2ContainerStatus struct {
+	// BuildStatus: Output only. The build status of the container image.
+	BuildStatus *GoogleCloudRunV2BuildStatus `json:"buildStatus,omitempty"`
 	// ImageDigest: ImageDigest holds the resolved digest for the image specified
 	// and resolved during the creation of Revision. This field holds the digest
 	// value regardless of whether a tag or digest was originally specified in the
@@ -862,13 +982,13 @@ type GoogleCloudRunV2ContainerStatus struct {
 	ImageDigest string `json:"imageDigest,omitempty"`
 	// Name: The name of the container, if specified.
 	Name string `json:"name,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ImageDigest") to
+	// ForceSendFields is a list of field names (e.g. "BuildStatus") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ImageDigest") to include in API
+	// NullFields is a list of field names (e.g. "BuildStatus") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1325,6 +1445,31 @@ type GoogleCloudRunV2ExportStatusResponse struct {
 
 func (s GoogleCloudRunV2ExportStatusResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2ExportStatusResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2FilestoreVolumeSource: Represents a volume backed by a
+// Filestore instance.
+type GoogleCloudRunV2FilestoreVolumeSource struct {
+	// Volume: Required. The resource name of the Filestore volume. Format:
+	// `projects/{project}/locations/{location}/volumePools/{volume_pool}/volumes/{v
+	// olume}`
+	Volume string `json:"volume,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Volume") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Volume") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2FilestoreVolumeSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2FilestoreVolumeSource
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2432,6 +2577,9 @@ type GoogleCloudRunV2Revision struct {
 	// readiness status, and detailed error information in case it did not reach a
 	// serving state.
 	Conditions []*GoogleCloudRunV2Condition `json:"conditions,omitempty"`
+	// ContainerStatuses: Output only. Status information for each of the specified
+	// containers. The status includes the resolved digest for specified images.
+	ContainerStatuses []*GoogleCloudRunV2ContainerStatus `json:"containerStatuses,omitempty"`
 	// Containers: Holds the list which define the units of execution for this
 	// Revision.
 	Containers []*GoogleCloudRunV2Container `json:"containers,omitempty"`
@@ -3463,8 +3611,8 @@ type GoogleCloudRunV2SubmitBuildRequest struct {
 	StorageSource *GoogleCloudRunV2StorageSource `json:"storageSource,omitempty"`
 	// Tags: Optional. Additional tags to annotate the build.
 	Tags []string `json:"tags,omitempty"`
-	// WorkerPool: Optional. Name of the Cloud Build Custom Worker Pool that should
-	// be used to build the function. The format of this field is
+	// WorkerPool: Optional. Name of the Cloud Build private pool that should be
+	// used to build the function. The format of this field is
 	// `projects/{project}/locations/{region}/workerPools/{workerPool}` where
 	// `{project}` and `{region}` are the project id and region respectively where
 	// the worker pool is defined and `{workerPool}` is the short name of the
@@ -3960,6 +4108,8 @@ type GoogleCloudRunV2Volume struct {
 	CloudSqlInstance *GoogleCloudRunV2CloudSqlInstance `json:"cloudSqlInstance,omitempty"`
 	// EmptyDir: Ephemeral storage used as a shared volume.
 	EmptyDir *GoogleCloudRunV2EmptyDirVolumeSource `json:"emptyDir,omitempty"`
+	// Filestore: Optional. Represents a volume backed by a Filestore instance.
+	Filestore *GoogleCloudRunV2FilestoreVolumeSource `json:"filestore,omitempty"`
 	// Gcs: Persistent storage backed by a Google Cloud Storage bucket.
 	Gcs *GoogleCloudRunV2GCSVolumeSource `json:"gcs,omitempty"`
 	// Name: Required. Volume's name.
@@ -4056,6 +4206,28 @@ type GoogleCloudRunV2VpcAccess struct {
 
 func (s GoogleCloudRunV2VpcAccess) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2VpcAccess
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2WorkerConfiguration: Configuration for the worker.
+type GoogleCloudRunV2WorkerConfiguration struct {
+	// CloudBuildWorkerConfiguration: Optional. Cloud Build worker configuration.
+	CloudBuildWorkerConfiguration *GoogleCloudRunV2CloudBuildWorkerConfiguration `json:"cloudBuildWorkerConfiguration,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "CloudBuildWorkerConfiguration") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudBuildWorkerConfiguration")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2WorkerConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2WorkerConfiguration
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4777,8 +4949,8 @@ type GoogleDevtoolsCloudbuildV1BuildOptions struct {
 	//   "REGIONAL_USER_OWNED_BUCKET" - Bucket is located in user-owned project in
 	// the same region as the build. The builder service account must have access
 	// to create and write to Cloud Storage buckets in the build project.
-	//   "LEGACY_BUCKET" - Bucket is located in a Google-owned project and is not
-	// regionalized.
+	//   "LEGACY_BUCKET" - Deprecated: Use `REGIONAL_USER_OWNED_BUCKET` instead.
+	// Bucket is located in a Google-owned project and is not regionalized.
 	DefaultLogsBucketBehavior string `json:"defaultLogsBucketBehavior,omitempty"`
 	// DiskSizeGb: Requested disk size for the VM that runs the build. Note that
 	// this is *NOT* "disk free"; some of the space will be used by the operating

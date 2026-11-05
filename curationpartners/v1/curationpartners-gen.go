@@ -1662,6 +1662,7 @@ type ReportDefinition struct {
 	//   "PROVIDED" - Use the time zone provided in the ReportDefinition.time_zone
 	// field. Reports may take longer to run since the dates are dynamically
 	// calculated at request time.
+	//   "CURATOR" - Use the time zone from the curator's account settings.
 	TimeZoneSource string `json:"timeZoneSource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
 	// unconditionally include in API requests. By default, fields with empty or

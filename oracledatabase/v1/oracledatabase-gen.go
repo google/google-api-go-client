@@ -177,6 +177,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.DatabaseCharacterSets = NewProjectsLocationsDatabaseCharacterSetsService(s)
 	rs.DatabaseConnections = NewProjectsLocationsDatabaseConnectionsService(s)
 	rs.Databases = NewProjectsLocationsDatabasesService(s)
+	rs.DbSystemComputePerformances = NewProjectsLocationsDbSystemComputePerformancesService(s)
 	rs.DbSystemInitialStorageSizes = NewProjectsLocationsDbSystemInitialStorageSizesService(s)
 	rs.DbSystemShapes = NewProjectsLocationsDbSystemShapesService(s)
 	rs.DbSystems = NewProjectsLocationsDbSystemsService(s)
@@ -184,6 +185,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.Entitlements = NewProjectsLocationsEntitlementsService(s)
 	rs.ExadbVmClusters = NewProjectsLocationsExadbVmClustersService(s)
 	rs.ExascaleDbStorageVaults = NewProjectsLocationsExascaleDbStorageVaultsService(s)
+	rs.FlexComponents = NewProjectsLocationsFlexComponentsService(s)
 	rs.GiVersions = NewProjectsLocationsGiVersionsService(s)
 	rs.GoldengateConnectionAssignments = NewProjectsLocationsGoldengateConnectionAssignmentsService(s)
 	rs.GoldengateConnectionTypes = NewProjectsLocationsGoldengateConnectionTypesService(s)
@@ -219,6 +221,8 @@ type ProjectsLocationsService struct {
 
 	Databases *ProjectsLocationsDatabasesService
 
+	DbSystemComputePerformances *ProjectsLocationsDbSystemComputePerformancesService
+
 	DbSystemInitialStorageSizes *ProjectsLocationsDbSystemInitialStorageSizesService
 
 	DbSystemShapes *ProjectsLocationsDbSystemShapesService
@@ -232,6 +236,8 @@ type ProjectsLocationsService struct {
 	ExadbVmClusters *ProjectsLocationsExadbVmClustersService
 
 	ExascaleDbStorageVaults *ProjectsLocationsExascaleDbStorageVaultsService
+
+	FlexComponents *ProjectsLocationsFlexComponentsService
 
 	GiVersions *ProjectsLocationsGiVersionsService
 
@@ -361,6 +367,15 @@ type ProjectsLocationsDatabasesService struct {
 	s *Service
 }
 
+func NewProjectsLocationsDbSystemComputePerformancesService(s *Service) *ProjectsLocationsDbSystemComputePerformancesService {
+	rs := &ProjectsLocationsDbSystemComputePerformancesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDbSystemComputePerformancesService struct {
+	s *Service
+}
+
 func NewProjectsLocationsDbSystemInitialStorageSizesService(s *Service) *ProjectsLocationsDbSystemInitialStorageSizesService {
 	rs := &ProjectsLocationsDbSystemInitialStorageSizesService{s: s}
 	return rs
@@ -433,6 +448,15 @@ func NewProjectsLocationsExascaleDbStorageVaultsService(s *Service) *ProjectsLoc
 }
 
 type ProjectsLocationsExascaleDbStorageVaultsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsFlexComponentsService(s *Service) *ProjectsLocationsFlexComponentsService {
+	rs := &ProjectsLocationsFlexComponentsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsFlexComponentsService struct {
 	s *Service
 }
 
@@ -2111,6 +2135,58 @@ func (s Column) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ComputePerformance: Parameters detailing the compute performance for a
+// specified DB system shape.
+type ComputePerformance struct {
+	// ComputeCount: Output only. The number of compute servers for the DB system.
+	ComputeCount int64 `json:"computeCount,omitempty"`
+	// ComputeModel: Output only. The compute model for Base Database Service.
+	//
+	// Possible values:
+	//   "COMPUTE_MODEL_UNSPECIFIED" - Unspecified compute model.
+	//   "COMPUTE_MODEL_ECPU" - Abstract measure of compute resources. ECPUs are
+	// based on the number of cores elastically allocated from a pool of compute
+	// and storage servers.
+	//   "COMPUTE_MODEL_OCPU" - Physical measure of compute resources. OCPUs are
+	// based on the physical core of a processor.
+	ComputeModel string `json:"computeModel,omitempty"`
+	// CpuCoreCount: Output only. The number of CPU cores available.
+	CpuCoreCount int64 `json:"cpuCoreCount,omitempty"`
+	// MemoryInGbs: Output only. The amount of memory allocated for the VMDB System
+	// in GBs.
+	MemoryInGbs float64 `json:"memoryInGbs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ComputeCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ComputeCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ComputePerformance) MarshalJSON() ([]byte, error) {
+	type NoMethod ComputePerformance
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *ComputePerformance) UnmarshalJSON(data []byte) error {
+	type NoMethod ComputePerformance
+	var s1 struct {
+		MemoryInGbs gensupport.JSONFloat64 `json:"memoryInGbs"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.MemoryInGbs = float64(s1.MemoryInGbs)
+	return nil
+}
+
 // ConfigureExascaleCloudExadataInfrastructureRequest: The request for
 // `CloudExadataInfrastructure.ConfigureExascale`.
 type ConfigureExascaleCloudExadataInfrastructureRequest struct {
@@ -2948,6 +3024,37 @@ type DbSystem struct {
 
 func (s DbSystem) MarshalJSON() ([]byte, error) {
 	type NoMethod DbSystem
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DbSystemComputePerformance: Details of the DbSystem compute performance
+// resource.
+type DbSystemComputePerformance struct {
+	// ComputePerformances: Output only. List of Compute performance details for
+	// the specified DB system shape.
+	ComputePerformances []*ComputePerformance `json:"computePerformances,omitempty"`
+	// Name: Identifier. The name of the DbSystemComputePerformance resource with
+	// the format:
+	// projects/{project}/locations/{location}/dbSystemComputePerformances/{db_syste
+	// m_compute_performance}
+	Name string `json:"name,omitempty"`
+	// Shape: Output only. The shape of the DB system.
+	Shape string `json:"shape,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ComputePerformances") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ComputePerformances") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DbSystemComputePerformance) MarshalJSON() ([]byte, error) {
+	type NoMethod DbSystemComputePerformance
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3925,6 +4032,96 @@ type FailoverAutonomousDatabaseRequest struct {
 
 func (s FailoverAutonomousDatabaseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod FailoverAutonomousDatabaseRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FlexComponent: Details of the Flex Component resource.
+type FlexComponent struct {
+	// Name: Identifier. Specifies the name of the Flex Component resource with the
+	// format:
+	// projects/{project}/locations/{region}/flexComponents/{flex_component}
+	Name string `json:"name,omitempty"`
+	// Properties: Output only. The properties of the Flex Component.
+	Properties *FlexComponentProperties `json:"properties,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FlexComponent) MarshalJSON() ([]byte, error) {
+	type NoMethod FlexComponent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FlexComponentProperties: The properties of the Flex Component.
+type FlexComponentProperties struct {
+	// AvailableCoreCount: Output only. The maximum number of CPU cores that can be
+	// enabled on the DB system for this shape.
+	AvailableCoreCount int64 `json:"availableCoreCount,omitempty"`
+	// AvailableDbNodeStoragePerNodeGb: Output only. The maximum storage that can
+	// be enabled on the Storage Server for this Flex Component.
+	AvailableDbNodeStoragePerNodeGb int64 `json:"availableDbNodeStoragePerNodeGb,omitempty"`
+	// AvailableLocalStorageGb: Output only. The maximum local storage that can be
+	// enabled on the DB Server for this Flex Component.
+	AvailableLocalStorageGb int64 `json:"availableLocalStorageGb,omitempty"`
+	// AvailableMemoryGb: Output only. The maximum memory size that can be enabled
+	// on the DB Server for this Flex Component.
+	AvailableMemoryGb int64 `json:"availableMemoryGb,omitempty"`
+	// ComputeModel: Output only. The compute model of the DB Server for this Flex
+	// Component.
+	//
+	// Possible values:
+	//   "COMPUTE_MODEL_UNSPECIFIED" - Unspecified compute model.
+	//   "COMPUTE_MODEL_ECPU" - Abstract measure of compute resources. ECPUs are
+	// based on the number of cores elastically allocated from a pool of compute
+	// and storage servers.
+	//   "COMPUTE_MODEL_OCPU" - Physical measure of compute resources. OCPUs are
+	// based on the physical core of a processor.
+	ComputeModel string `json:"computeModel,omitempty"`
+	// DescriptionSummary: Output only. The description summary for this Flex
+	// Component.
+	DescriptionSummary string `json:"descriptionSummary,omitempty"`
+	// HardwareType: Output only. The hardware type of the DB (Compute) or Storage
+	// (Cell) Server for this Flex Component.
+	//
+	// Possible values:
+	//   "HARDWARE_TYPE_UNSPECIFIED" - Unspecified default
+	//   "COMPUTE" - COMPUTE
+	//   "CELL" - CELL
+	HardwareType string `json:"hardwareType,omitempty"`
+	// MinimumCoreCount: Output only. The minimum number of CPU cores that can be
+	// enabled on the DB Server for this Flex Component.
+	MinimumCoreCount int64 `json:"minimumCoreCount,omitempty"`
+	// Name: Output only. The name of the Flex Component used for the DB system.
+	Name string `json:"name,omitempty"`
+	// RuntimeMinimumCoreCount: Output only. The runtime minimum number of CPU
+	// cores that can be enabled for this Flex Component.
+	RuntimeMinimumCoreCount int64 `json:"runtimeMinimumCoreCount,omitempty"`
+	// Shape: Output only. The name of the DB system shape for this Flex Component.
+	Shape string `json:"shape,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AvailableCoreCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AvailableCoreCount") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FlexComponentProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod FlexComponentProperties
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7133,6 +7330,37 @@ func (s ListDbServersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListDbSystemComputePerformancesResponse: Message for response to listing
+// DbSystemComputePerformances
+type ListDbSystemComputePerformancesResponse struct {
+	// DbSystemComputePerformances: The list of DbSystemComputePerformance.
+	DbSystemComputePerformances []*DbSystemComputePerformance `json:"dbSystemComputePerformances,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unordered list. Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DbSystemComputePerformances") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DbSystemComputePerformances") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListDbSystemComputePerformancesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListDbSystemComputePerformancesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListDbSystemInitialStorageSizesResponse: The response for
 // `DbSystemInitialStorageSizes.List`.
 type ListDbSystemInitialStorageSizesResponse struct {
@@ -7339,6 +7567,36 @@ type ListExascaleDbStorageVaultsResponse struct {
 
 func (s ListExascaleDbStorageVaultsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListExascaleDbStorageVaultsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListFlexComponentsResponse: Message for response to listing FlexComponents
+type ListFlexComponentsResponse struct {
+	// FlexComponents: The list of FlexComponent
+	FlexComponents []*FlexComponent `json:"flexComponents,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unordered list. Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "FlexComponents") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FlexComponents") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListFlexComponentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListFlexComponentsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8090,17 +8348,17 @@ type OdbNetwork struct {
 	// EntitlementId: Output only. The ID of the subscription entitlement
 	// associated with the OdbNetwork.
 	EntitlementId string `json:"entitlementId,omitempty"`
-	// GcpOracleZone: Optional. The GCP Oracle zone where OdbNetwork is hosted.
-	// Example: us-east4-b-r2. If not specified, the system will pick a zone based
-	// on availability.
+	// GcpOracleZone: Optional. Immutable. The GCP Oracle zone where OdbNetwork is
+	// hosted. Example: us-east4-b-r2. If not specified, the system will pick a
+	// zone based on availability.
 	GcpOracleZone string `json:"gcpOracleZone,omitempty"`
 	// Labels: Optional. Labels or tags associated with the resource.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. The name of the OdbNetwork resource in the following
 	// format: projects/{project}/locations/{region}/odbNetworks/{odb_network}
 	Name string `json:"name,omitempty"`
-	// Network: Required. The name of the VPC network in the following format:
-	// projects/{project}/global/networks/{network}
+	// Network: Required. Immutable. The name of the VPC network in the following
+	// format: projects/{project}/global/networks/{network}
 	Network string `json:"network,omitempty"`
 	// Reconciling: Output only. Indicates whether the OdbNetwork is currently
 	// reconciling changes.
@@ -14500,6 +14758,162 @@ func (c *ProjectsLocationsDatabasesListCall) Pages(ctx context.Context, f func(*
 	}
 }
 
+type ProjectsLocationsDbSystemComputePerformancesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the DbSystemComputePerformances for the given project and
+// location.
+//
+//   - parent: Parent value for ListDbSystemComputePerformancesRequest Format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsDbSystemComputePerformancesService) List(parent string) *ProjectsLocationsDbSystemComputePerformancesListCall {
+	c := &ProjectsLocationsDbSystemComputePerformancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request. Only the `db_system_shape` field is supported in the
+// following format: `db_system_shape="{db_system_shape}".
+func (c *ProjectsLocationsDbSystemComputePerformancesListCall) Filter(filter string) *ProjectsLocationsDbSystemComputePerformancesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *ProjectsLocationsDbSystemComputePerformancesListCall) PageSize(pageSize int64) *ProjectsLocationsDbSystemComputePerformancesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsDbSystemComputePerformancesListCall) PageToken(pageToken string) *ProjectsLocationsDbSystemComputePerformancesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDbSystemComputePerformancesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDbSystemComputePerformancesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDbSystemComputePerformancesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDbSystemComputePerformancesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDbSystemComputePerformancesListCall) Context(ctx context.Context) *ProjectsLocationsDbSystemComputePerformancesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDbSystemComputePerformancesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDbSystemComputePerformancesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dbSystemComputePerformances")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.dbSystemComputePerformances.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.dbSystemComputePerformances.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListDbSystemComputePerformancesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDbSystemComputePerformancesListCall) Do(opts ...googleapi.CallOption) (*ListDbSystemComputePerformancesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDbSystemComputePerformancesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.dbSystemComputePerformances.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDbSystemComputePerformancesListCall) Pages(ctx context.Context, f func(*ListDbSystemComputePerformancesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 type ProjectsLocationsDbSystemInitialStorageSizesListCall struct {
 	s            *Service
 	parent       string
@@ -17289,6 +17703,161 @@ func (c *ProjectsLocationsExascaleDbStorageVaultsPatchCall) Do(opts ...googleapi
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exascaleDbStorageVaults.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsFlexComponentsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Flex Components in a given project and location.
+//
+//   - parent: Parent value for ListFlexComponentsRequest Format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsFlexComponentsService) List(parent string) *ProjectsLocationsFlexComponentsListCall {
+	c := &ProjectsLocationsFlexComponentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request. Only the `shape` field is supported in the following
+// format: `shape="{shape}".
+func (c *ProjectsLocationsFlexComponentsListCall) Filter(filter string) *ProjectsLocationsFlexComponentsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *ProjectsLocationsFlexComponentsListCall) PageSize(pageSize int64) *ProjectsLocationsFlexComponentsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsFlexComponentsListCall) PageToken(pageToken string) *ProjectsLocationsFlexComponentsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFlexComponentsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsFlexComponentsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsFlexComponentsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsFlexComponentsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFlexComponentsListCall) Context(ctx context.Context) *ProjectsLocationsFlexComponentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFlexComponentsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFlexComponentsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/flexComponents")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.flexComponents.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.flexComponents.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListFlexComponentsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFlexComponentsListCall) Do(opts ...googleapi.CallOption) (*ListFlexComponentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListFlexComponentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.flexComponents.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsFlexComponentsListCall) Pages(ctx context.Context, f func(*ListFlexComponentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsGiVersionsListCall struct {

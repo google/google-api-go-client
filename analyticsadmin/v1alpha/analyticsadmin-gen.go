@@ -5337,7 +5337,7 @@ type GoogleAnalyticsAdminV1alphaProvisionAccountTicketRequest struct {
 	// Account: The account to create.
 	Account *GoogleAnalyticsAdminV1alphaAccount `json:"account,omitempty"`
 	// RedirectUri: Redirect URI where the user will be sent after accepting Terms
-	// of Service. Must be configured in Cloud Console as a Redirect URI.
+	// of Service.
 	RedirectUri string `json:"redirectUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Account") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
