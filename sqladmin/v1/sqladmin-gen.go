@@ -6824,103 +6824,6 @@ func (s SqlSubOperationType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SqlWorkloadCapturesStartReplayRequest: Request to start executing a captured
-// workload on a replay instance (the Cloud SQL instance where the recorded SQL
-// queries are executed).
-type SqlWorkloadCapturesStartReplayRequest struct {
-	// StartWorkloadReplayContext: Required. Contains details about the start
-	// workload replay operation.
-	StartWorkloadReplayContext *StartWorkloadReplayContext `json:"startWorkloadReplayContext,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "StartWorkloadReplayContext")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "StartWorkloadReplayContext") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s SqlWorkloadCapturesStartReplayRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod SqlWorkloadCapturesStartReplayRequest
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// SqlWorkloadCapturesStartRequest: Request to start recording traffic from the
-// primary instance (captured workload).
-type SqlWorkloadCapturesStartRequest struct {
-	// StartWorkloadCaptureContext: Optional. Contains details about the start
-	// workload capture operation.
-	StartWorkloadCaptureContext *StartWorkloadCaptureContext `json:"startWorkloadCaptureContext,omitempty"`
-	// ForceSendFields is a list of field names (e.g.
-	// "StartWorkloadCaptureContext") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
-	// for more details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "StartWorkloadCaptureContext") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s SqlWorkloadCapturesStartRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod SqlWorkloadCapturesStartRequest
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// SqlWorkloadCapturesStopReplayRequest: Request to stop an active workload
-// replay on a target Cloud SQL replay instance.
-type SqlWorkloadCapturesStopReplayRequest struct {
-	// StopWorkloadReplayContext: Optional. Contains details about the stop
-	// workload replay operation. If omitted, default values are used.
-	StopWorkloadReplayContext *StopWorkloadReplayContext `json:"stopWorkloadReplayContext,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "StopWorkloadReplayContext")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "StopWorkloadReplayContext") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s SqlWorkloadCapturesStopReplayRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod SqlWorkloadCapturesStopReplayRequest
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// SqlWorkloadCapturesStopRequest: Request to stop recording traffic from the
-// primary instance.
-type SqlWorkloadCapturesStopRequest struct {
-	// StopWorkloadCaptureContext: Optional. Contains details about the stop
-	// workload capture operation.
-	StopWorkloadCaptureContext *StopWorkloadCaptureContext `json:"stopWorkloadCaptureContext,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "StopWorkloadCaptureContext")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "StopWorkloadCaptureContext") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s SqlWorkloadCapturesStopRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod SqlWorkloadCapturesStopRequest
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // SslCert: SslCerts Resource
 type SslCert struct {
 	// Cert: PEM representation.
@@ -7645,6 +7548,7 @@ func (s WorkloadCapture) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// WorkloadCapturesListResponse: Instance list captured workloads response.
 type WorkloadCapturesListResponse struct {
 	// Kind: This is always `sql#workloadCapturesList`.
 	Kind string `json:"kind,omitempty"`
@@ -7668,6 +7572,103 @@ type WorkloadCapturesListResponse struct {
 
 func (s WorkloadCapturesListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkloadCapturesListResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkloadCapturesStartReplayRequest: Request to start executing a captured
+// workload on a replay instance (the Cloud SQL instance where the recorded SQL
+// queries are executed).
+type WorkloadCapturesStartReplayRequest struct {
+	// StartWorkloadReplayContext: Required. Contains details about the start
+	// workload replay operation.
+	StartWorkloadReplayContext *StartWorkloadReplayContext `json:"startWorkloadReplayContext,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "StartWorkloadReplayContext")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StartWorkloadReplayContext") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkloadCapturesStartReplayRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkloadCapturesStartReplayRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkloadCapturesStartRequest: Request to start recording traffic from the
+// primary instance (captured workload).
+type WorkloadCapturesStartRequest struct {
+	// StartWorkloadCaptureContext: Optional. Contains details about the start
+	// workload capture operation.
+	StartWorkloadCaptureContext *StartWorkloadCaptureContext `json:"startWorkloadCaptureContext,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "StartWorkloadCaptureContext") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StartWorkloadCaptureContext") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkloadCapturesStartRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkloadCapturesStartRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkloadCapturesStopReplayRequest: Request to stop an active workload replay
+// on a target Cloud SQL replay instance.
+type WorkloadCapturesStopReplayRequest struct {
+	// StopWorkloadReplayContext: Optional. Contains details about the stop
+	// workload replay operation. If omitted, default values are used.
+	StopWorkloadReplayContext *StopWorkloadReplayContext `json:"stopWorkloadReplayContext,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "StopWorkloadReplayContext")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StopWorkloadReplayContext") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkloadCapturesStopReplayRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkloadCapturesStopReplayRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkloadCapturesStopRequest: Request to stop recording traffic from the
+// primary instance.
+type WorkloadCapturesStopRequest struct {
+	// StopWorkloadCaptureContext: Optional. Contains details about the stop
+	// workload capture operation.
+	StopWorkloadCaptureContext *StopWorkloadCaptureContext `json:"stopWorkloadCaptureContext,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "StopWorkloadCaptureContext")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StopWorkloadCaptureContext") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkloadCapturesStopRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkloadCapturesStopRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -17325,13 +17326,13 @@ func (c *WorkloadCapturesListCall) Do(opts ...googleapi.CallOption) (*WorkloadCa
 }
 
 type WorkloadCapturesStartCall struct {
-	s                               *Service
-	project                         string
-	instance                        string
-	sqlworkloadcapturesstartrequest *SqlWorkloadCapturesStartRequest
-	urlParams_                      gensupport.URLParams
-	ctx_                            context.Context
-	header_                         http.Header
+	s                            *Service
+	project                      string
+	instance                     string
+	workloadcapturesstartrequest *WorkloadCapturesStartRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
 }
 
 // Start: Starts capturing the SQL queries, transactions, and other operations
@@ -17342,11 +17343,11 @@ type WorkloadCapturesStartCall struct {
 //
 // - instance: Cloud SQL instance ID. This does not include the project ID.
 // - project: Project ID of the project that contains the instance.
-func (r *WorkloadCapturesService) Start(project string, instance string, sqlworkloadcapturesstartrequest *SqlWorkloadCapturesStartRequest) *WorkloadCapturesStartCall {
+func (r *WorkloadCapturesService) Start(project string, instance string, workloadcapturesstartrequest *WorkloadCapturesStartRequest) *WorkloadCapturesStartCall {
 	c := &WorkloadCapturesStartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.instance = instance
-	c.sqlworkloadcapturesstartrequest = sqlworkloadcapturesstartrequest
+	c.workloadcapturesstartrequest = workloadcapturesstartrequest
 	return c
 }
 
@@ -17375,7 +17376,7 @@ func (c *WorkloadCapturesStartCall) Header() http.Header {
 
 func (c *WorkloadCapturesStartCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.sqlworkloadcapturesstartrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.workloadcapturesstartrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -17436,14 +17437,14 @@ func (c *WorkloadCapturesStartCall) Do(opts ...googleapi.CallOption) (*Operation
 }
 
 type WorkloadCapturesStartReplayCall struct {
-	s                                     *Service
-	project                               string
-	instance                              string
-	workloadId                            string
-	sqlworkloadcapturesstartreplayrequest *SqlWorkloadCapturesStartReplayRequest
-	urlParams_                            gensupport.URLParams
-	ctx_                                  context.Context
-	header_                               http.Header
+	s                                  *Service
+	project                            string
+	instance                           string
+	workloadId                         string
+	workloadcapturesstartreplayrequest *WorkloadCapturesStartReplayRequest
+	urlParams_                         gensupport.URLParams
+	ctx_                               context.Context
+	header_                            http.Header
 }
 
 // StartReplay: Starts executing a captured workload on a separate Cloud SQL
@@ -17453,12 +17454,12 @@ type WorkloadCapturesStartReplayCall struct {
 // - instance: Cloud SQL instance ID. This does not include the project ID.
 // - project: Project ID of the project that contains the instance.
 // - workloadId: The ID of the workload to replay.
-func (r *WorkloadCapturesService) StartReplay(project string, instance string, workloadId string, sqlworkloadcapturesstartreplayrequest *SqlWorkloadCapturesStartReplayRequest) *WorkloadCapturesStartReplayCall {
+func (r *WorkloadCapturesService) StartReplay(project string, instance string, workloadId string, workloadcapturesstartreplayrequest *WorkloadCapturesStartReplayRequest) *WorkloadCapturesStartReplayCall {
 	c := &WorkloadCapturesStartReplayCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.instance = instance
 	c.workloadId = workloadId
-	c.sqlworkloadcapturesstartreplayrequest = sqlworkloadcapturesstartreplayrequest
+	c.workloadcapturesstartreplayrequest = workloadcapturesstartreplayrequest
 	return c
 }
 
@@ -17487,7 +17488,7 @@ func (c *WorkloadCapturesStartReplayCall) Header() http.Header {
 
 func (c *WorkloadCapturesStartReplayCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.sqlworkloadcapturesstartreplayrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.workloadcapturesstartreplayrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -17549,13 +17550,13 @@ func (c *WorkloadCapturesStartReplayCall) Do(opts ...googleapi.CallOption) (*Ope
 }
 
 type WorkloadCapturesStopCall struct {
-	s                              *Service
-	project                        string
-	instance                       string
-	sqlworkloadcapturesstoprequest *SqlWorkloadCapturesStopRequest
-	urlParams_                     gensupport.URLParams
-	ctx_                           context.Context
-	header_                        http.Header
+	s                           *Service
+	project                     string
+	instance                    string
+	workloadcapturesstoprequest *WorkloadCapturesStopRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
 }
 
 // Stop: Stops capturing the query traffic and related operations executed on
@@ -17563,11 +17564,11 @@ type WorkloadCapturesStopCall struct {
 //
 // - instance: Cloud SQL instance ID. This does not include the project ID.
 // - project: Project ID of the project that contains the instance.
-func (r *WorkloadCapturesService) Stop(project string, instance string, sqlworkloadcapturesstoprequest *SqlWorkloadCapturesStopRequest) *WorkloadCapturesStopCall {
+func (r *WorkloadCapturesService) Stop(project string, instance string, workloadcapturesstoprequest *WorkloadCapturesStopRequest) *WorkloadCapturesStopCall {
 	c := &WorkloadCapturesStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.instance = instance
-	c.sqlworkloadcapturesstoprequest = sqlworkloadcapturesstoprequest
+	c.workloadcapturesstoprequest = workloadcapturesstoprequest
 	return c
 }
 
@@ -17596,7 +17597,7 @@ func (c *WorkloadCapturesStopCall) Header() http.Header {
 
 func (c *WorkloadCapturesStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.sqlworkloadcapturesstoprequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.workloadcapturesstoprequest)
 	if err != nil {
 		return nil, err
 	}
@@ -17657,13 +17658,13 @@ func (c *WorkloadCapturesStopCall) Do(opts ...googleapi.CallOption) (*Operation,
 }
 
 type WorkloadCapturesStopReplayCall struct {
-	s                                    *Service
-	project                              string
-	instance                             string
-	sqlworkloadcapturesstopreplayrequest *SqlWorkloadCapturesStopReplayRequest
-	urlParams_                           gensupport.URLParams
-	ctx_                                 context.Context
-	header_                              http.Header
+	s                                 *Service
+	project                           string
+	instance                          string
+	workloadcapturesstopreplayrequest *WorkloadCapturesStopReplayRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
 }
 
 // StopReplay: Stops an active workload replay on the target Cloud SQL replay
@@ -17673,11 +17674,11 @@ type WorkloadCapturesStopReplayCall struct {
 //     not include the project ID.
 //   - project: Project ID of the project that contains the target replay
 //     instance.
-func (r *WorkloadCapturesService) StopReplay(project string, instance string, sqlworkloadcapturesstopreplayrequest *SqlWorkloadCapturesStopReplayRequest) *WorkloadCapturesStopReplayCall {
+func (r *WorkloadCapturesService) StopReplay(project string, instance string, workloadcapturesstopreplayrequest *WorkloadCapturesStopReplayRequest) *WorkloadCapturesStopReplayCall {
 	c := &WorkloadCapturesStopReplayCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.instance = instance
-	c.sqlworkloadcapturesstopreplayrequest = sqlworkloadcapturesstopreplayrequest
+	c.workloadcapturesstopreplayrequest = workloadcapturesstopreplayrequest
 	return c
 }
 
@@ -17706,7 +17707,7 @@ func (c *WorkloadCapturesStopReplayCall) Header() http.Header {
 
 func (c *WorkloadCapturesStopReplayCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.sqlworkloadcapturesstopreplayrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.workloadcapturesstopreplayrequest)
 	if err != nil {
 		return nil, err
 	}

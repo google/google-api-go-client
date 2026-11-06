@@ -1920,6 +1920,11 @@ type Cluster struct {
 	// (https://cloud.google.com/compute/docs/subnetworks) to which the cluster is
 	// connected. On output this shows the subnetwork ID instead of the name.
 	Subnetwork string `json:"subnetwork,omitempty"`
+	// TargetNodeVersion: Optional. The cluster-level default node version to be
+	// used for newly created node pools where the node version is not explicitly
+	// specified. The node version is also used to reconcile existing node pools to
+	// this version.
+	TargetNodeVersion string `json:"targetNodeVersion,omitempty"`
 	// TpuConfig: Configuration for Cloud TPU support; This field is deprecated due
 	// to the deprecation of 2VM TPU. The end of life date for 2VM TPU is
 	// 2025-04-25.
@@ -3728,6 +3733,30 @@ func (s EphemeralStorageLocalSsdConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// EtcHostsEntry: Additional entries to be added to /etc/hosts.
+type EtcHostsEntry struct {
+	// Host: The hostname of the host.
+	Host string `json:"host,omitempty"`
+	// Ip: The IPv4 or IPv6 address of the host.
+	Ip string `json:"ip,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Host") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Host") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EtcHostsEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod EtcHostsEntry
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // EvictionGracePeriod: Eviction grace periods are grace periods for each
 // eviction signal.
 type EvictionGracePeriod struct {
@@ -5045,6 +5074,66 @@ func (s KalmConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// KernelCommandlineOverrides: Definition of possible additional kernel command
+// line arguments to be configured to the kernel.
+type KernelCommandlineOverrides struct {
+	// InitOnAlloc: Optional. Defines the change of init_on_alloc.
+	//
+	// Possible values:
+	//   "INIT_ON_ALLOC_UNSPECIFIED" - Default value. GKE will not modify the
+	// kernel configuration.
+	//   "INIT_ON_ALLOC_OFF" - Disable init_on_alloc.
+	InitOnAlloc string `json:"initOnAlloc,omitempty"`
+	// SpecRstackOverflow: Optional. Defines the change of spec_rstack_overflow.
+	//
+	// Possible values:
+	//   "SPEC_RSTACK_OVERFLOW_UNSPECIFIED" - Default value. GKE will not modify
+	// the kernel configuration.
+	//   "SPEC_RSTACK_OVERFLOW_OFF" - Disable spec_rstack_overflow.
+	SpecRstackOverflow string `json:"specRstackOverflow,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InitOnAlloc") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InitOnAlloc") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s KernelCommandlineOverrides) MarshalJSON() ([]byte, error) {
+	type NoMethod KernelCommandlineOverrides
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// KernelOverrides: Parameters that can be configured on the kernel.
+type KernelOverrides struct {
+	// KernelCommandlineOverrides: Optional. Allow setting for optional kernel
+	// command line arguments overrides.
+	KernelCommandlineOverrides *KernelCommandlineOverrides `json:"kernelCommandlineOverrides,omitempty"`
+	// LruGen: Optional. lrugen (Multi-Gen LRU) options
+	LruGen *LRUGen `json:"lruGen,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KernelCommandlineOverrides")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KernelCommandlineOverrides") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s KernelOverrides) MarshalJSON() ([]byte, error) {
+	type NoMethod KernelOverrides
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // KubeletCertInfo: Contains expiry information about the kubelet certificate.
 type KubeletCertInfo struct {
 	// NonTpmBootstrapCertExpireTime: Output only.
@@ -5091,6 +5180,32 @@ func (s KubernetesDashboard) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// LRUGen: lrugen (Multi-Gen LRU) options See
+// https://docs.kernel.org/admin-guide/mm/multigen_lru.html
+type LRUGen struct {
+	// Enabled: Optional. Enable lrugen.
+	Enabled bool `json:"enabled,omitempty"`
+	// MinTtlMs: Optional. Users can write N to min_ttl_ms to prevent the working
+	// set of N milliseconds from getting evicted.
+	MinTtlMs int64 `json:"minTtlMs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LRUGen) MarshalJSON() ([]byte, error) {
+	type NoMethod LRUGen
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // LegacyAbac: Configuration for the legacy Attribute Based Access Control
 // authorization mode.
 type LegacyAbac struct {
@@ -5122,6 +5237,14 @@ type LinuxNodeConfig struct {
 	// AccurateTimeConfig: Optional. The accurate time configuration for the node
 	// pool.
 	AccurateTimeConfig *AccurateTimeConfig `json:"accurateTimeConfig,omitempty"`
+	// AdditionalEtcHosts: Optional. Additional entries to be added to /etc/hosts.
+	AdditionalEtcHosts []*EtcHostsEntry `json:"additionalEtcHosts,omitempty"`
+	// AdditionalEtcResolvConf: Optional. Additional entries to be added to
+	// /etc/resolv.conf.
+	AdditionalEtcResolvConf []*ResolvedConfEntry `json:"additionalEtcResolvConf,omitempty"`
+	// AdditionalEtcSystemdResolvedConf: Optional. Additional entries to be added
+	// to /etc/systemd/resolved.conf.
+	AdditionalEtcSystemdResolvedConf []*ResolvedConfEntry `json:"additionalEtcSystemdResolvedConf,omitempty"`
 	// CgroupMode: cgroup_mode specifies the cgroup mode to be used on the node.
 	//
 	// Possible values:
@@ -5141,6 +5264,9 @@ type LinuxNodeConfig struct {
 	DiskIoScheduler *DiskIoScheduler `json:"diskIoScheduler,omitempty"`
 	// Hugepages: Optional. Amounts for 2M and 1G hugepages
 	Hugepages *HugepagesConfig `json:"hugepages,omitempty"`
+	// KernelOverrides: Optional. Defines the kernel overrides to be applied to the
+	// nodes. Note: sysctl changes are defined separately in the sysctls fields.
+	KernelOverrides *KernelOverrides `json:"kernelOverrides,omitempty"`
 	// NodeKernelModuleLoading: Optional. Configuration for kernel module loading
 	// on nodes. When enabled, the node pool will be provisioned with a
 	// Container-Optimized OS image that enforces kernel module signature
@@ -5178,6 +5304,8 @@ type LinuxNodeConfig struct {
 	// vm.overcommit_ratio vm.vfs_cache_pressure vm.swappiness
 	// vm.watermark_scale_factor vm.min_free_kbytes
 	Sysctls map[string]string `json:"sysctls,omitempty"`
+	// TimeZone: Optional. Configures the timezone of the node.
+	TimeZone string `json:"timeZone,omitempty"`
 	// TransparentHugepageDefrag: Optional. Defines the transparent hugepage defrag
 	// configuration on the node. VM hugepage allocation can be managed by either
 	// limiting defragmentation for delayed allocation or skipping it entirely for
@@ -8753,6 +8881,30 @@ type ReservedResourcesConfig struct {
 
 func (s ReservedResourcesConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ReservedResourcesConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ResolvedConfEntry: Additional entries to be added to resolved.conf.
+type ResolvedConfEntry struct {
+	// Key: The key of resolved.conf
+	Key string `json:"key,omitempty"`
+	// Value: Optional. The value of resolved.conf
+	Value []string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResolvedConfEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod ResolvedConfEntry
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

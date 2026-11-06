@@ -350,7 +350,8 @@ type Attributes struct {
 	// Description: Description of the item.
 	Description string `json:"description,omitempty"`
 	// ExcludedDestinations: The list of destinations to exclude for this target
-	// (corresponds to unchecked check boxes in Merchant Center).
+	// (corresponds to unchecked check boxes in Merchant Center). Supported values
+	// are: - `css_ads_experiences` - `css_organic_experiences`
 	ExcludedDestinations []string `json:"excludedDestinations,omitempty"`
 	// ExpirationDate: Date on which the item should expire, as specified upon
 	// insertion, in ISO 8601 (http://en.wikipedia.org/wiki/ISO_8601) format. The
@@ -394,7 +395,8 @@ type Attributes struct {
 	ImageLink string `json:"imageLink,omitempty"`
 	// IncludedDestinations: The list of destinations to include for this target
 	// (corresponds to checked check boxes in Merchant Center). Default
-	// destinations are always included unless provided in `excludedDestinations`.
+	// destinations are always included unless provided in `excluded_destinations`.
+	// Supported values are: - `css_ads_experiences` - `css_organic_experiences`
 	IncludedDestinations []string `json:"includedDestinations,omitempty"`
 	// IsBundle: Whether the item is a merchant-defined bundle. A bundle is a
 	// custom grouping of different products sold by a merchant for a single price.

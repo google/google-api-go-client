@@ -668,6 +668,15 @@ type MerchantReviewDataSource struct {
 // PrimaryProductDataSource: The primary data source for local and online
 // products.
 type PrimaryProductDataSource struct {
+	// Channel: Optional. Immutable. Specifies the type of data source channel.
+	//
+	// Possible values:
+	//   "CHANNEL_UNSPECIFIED" - Not specified.
+	//   "ONLINE_PRODUCTS" - Online product.
+	//   "LOCAL_PRODUCTS" - Local product.
+	//   "PRODUCTS" - Unified data source for both local and online products. Note:
+	// Products management through the API is not possible for this channel.
+	Channel string `json:"channel,omitempty"`
 	// ContentLanguage: Optional. Immutable. The two-letter ISO 639-1 language of
 	// the items in the data source. `feedLabel` and `contentLanguage` must be
 	// either both set or unset. The fields can only be unset for data sources
@@ -713,15 +722,15 @@ type PrimaryProductDataSource struct {
 	// are prefixed with `local~` in the product resource ID. For example,
 	// `accounts/123/products/local~en~US~sku123`.
 	LegacyLocal bool `json:"legacyLocal,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ContentLanguage") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Channel") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ContentLanguage") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Channel") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
