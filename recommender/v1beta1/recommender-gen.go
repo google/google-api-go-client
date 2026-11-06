@@ -675,6 +675,10 @@ type CloudRecommendationsRecommendersDatabasesV1CtaConfig struct {
 	//   "STRING_KEY_ESTIMATED_OOM_PROBABILITY"
 	//   "STRING_KEY_MAX_CONNECTIONS_CURRENT_VALUE"
 	//   "STRING_KEY_MAX_CONNECTIONS_RECOMMENDED_VALUE"
+	//   "STRING_KEY_INNODB_REDO_LOG_CAPACITY_CURRENT_VALUE"
+	//   "STRING_KEY_INNODB_REDO_LOG_CAPACITY_RECOMMENDED_VALUE"
+	//   "STRING_KEY_INNODB_LOG_FILE_SIZE_CURRENT_VALUE"
+	//   "STRING_KEY_INNODB_LOG_FILE_SIZE_RECOMMENDED_VALUE"
 	Label string `json:"label,omitempty"`
 	// Possible values:
 	//   "REDIRECT_PAGE_UNSPECIFIED"
@@ -1005,6 +1009,10 @@ type CloudRecommendationsRecommendersDatabasesV1PlaybookLink struct {
 	//   "STRING_KEY_ESTIMATED_OOM_PROBABILITY"
 	//   "STRING_KEY_MAX_CONNECTIONS_CURRENT_VALUE"
 	//   "STRING_KEY_MAX_CONNECTIONS_RECOMMENDED_VALUE"
+	//   "STRING_KEY_INNODB_REDO_LOG_CAPACITY_CURRENT_VALUE"
+	//   "STRING_KEY_INNODB_REDO_LOG_CAPACITY_RECOMMENDED_VALUE"
+	//   "STRING_KEY_INNODB_LOG_FILE_SIZE_CURRENT_VALUE"
+	//   "STRING_KEY_INNODB_LOG_FILE_SIZE_RECOMMENDED_VALUE"
 	Label string `json:"label,omitempty"`
 	Link  string `json:"link,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Label") to unconditionally
@@ -1217,6 +1225,10 @@ type CloudRecommendationsRecommendersDatabasesV1SimpleValue struct {
 	//   "STRING_KEY_ESTIMATED_OOM_PROBABILITY"
 	//   "STRING_KEY_MAX_CONNECTIONS_CURRENT_VALUE"
 	//   "STRING_KEY_MAX_CONNECTIONS_RECOMMENDED_VALUE"
+	//   "STRING_KEY_INNODB_REDO_LOG_CAPACITY_CURRENT_VALUE"
+	//   "STRING_KEY_INNODB_REDO_LOG_CAPACITY_RECOMMENDED_VALUE"
+	//   "STRING_KEY_INNODB_LOG_FILE_SIZE_CURRENT_VALUE"
+	//   "STRING_KEY_INNODB_LOG_FILE_SIZE_RECOMMENDED_VALUE"
 	EnumValue string `json:"enumValue,omitempty"`
 	// LinkValue: Link value for the table cell.
 	LinkValue *CloudRecommendationsRecommendersDatabasesV1Link `json:"linkValue,omitempty"`
@@ -1453,6 +1465,10 @@ type CloudRecommendationsRecommendersDatabasesV1Table struct {
 	//   "STRING_KEY_ESTIMATED_OOM_PROBABILITY"
 	//   "STRING_KEY_MAX_CONNECTIONS_CURRENT_VALUE"
 	//   "STRING_KEY_MAX_CONNECTIONS_RECOMMENDED_VALUE"
+	//   "STRING_KEY_INNODB_REDO_LOG_CAPACITY_CURRENT_VALUE"
+	//   "STRING_KEY_INNODB_REDO_LOG_CAPACITY_RECOMMENDED_VALUE"
+	//   "STRING_KEY_INNODB_LOG_FILE_SIZE_CURRENT_VALUE"
+	//   "STRING_KEY_INNODB_LOG_FILE_SIZE_RECOMMENDED_VALUE"
 	Headers []string `json:"headers,omitempty"`
 	// Rows: Rows for the table. Ensure that the order of the cells in the row
 	// matches the order of the headers.
@@ -1665,6 +1681,10 @@ type CloudRecommendationsRecommendersDatabasesV1TableField struct {
 	//   "STRING_KEY_ESTIMATED_OOM_PROBABILITY"
 	//   "STRING_KEY_MAX_CONNECTIONS_CURRENT_VALUE"
 	//   "STRING_KEY_MAX_CONNECTIONS_RECOMMENDED_VALUE"
+	//   "STRING_KEY_INNODB_REDO_LOG_CAPACITY_CURRENT_VALUE"
+	//   "STRING_KEY_INNODB_REDO_LOG_CAPACITY_RECOMMENDED_VALUE"
+	//   "STRING_KEY_INNODB_LOG_FILE_SIZE_CURRENT_VALUE"
+	//   "STRING_KEY_INNODB_LOG_FILE_SIZE_RECOMMENDED_VALUE"
 	Key string `json:"key,omitempty"`
 	// NumberValue: Number value for the table field.
 	NumberValue float64 `json:"numberValue,omitempty"`

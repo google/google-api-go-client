@@ -547,6 +547,10 @@ type ProjectsLocationsStandardsControlsService struct {
 
 // AuditReport: An audit report.
 type AuditReport struct {
+	// CloudControlParameterStates: Output only. Parameter values provided by the
+	// user and values for tunable parameters, stored in the DB, keyed by control
+	// name.
+	CloudControlParameterStates map[string]CloudControlParameterStates `json:"cloudControlParameterStates,omitempty"`
 	// ComplianceFramework: Output only. Compliance framework to use for the audit
 	// report. For example, `CIS_GCP_FOUNDATIONS_V1_2_0`.
 	ComplianceFramework string `json:"complianceFramework,omitempty"`
@@ -597,15 +601,15 @@ type AuditReport struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ComplianceFramework") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "CloudControlParameterStates") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ComplianceFramework") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CloudControlParameterStates") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -643,6 +647,11 @@ type AuditSchedule struct {
 	Name string `json:"name,omitempty"`
 	// NextRunTime: Output only. Calculated timestamp for the next scheduled run.
 	NextRunTime string `json:"nextRunTime,omitempty"`
+	// ParameterOverrides: Optional. Maps dynamic parameter overrides by Cloud
+	// Control resource name at execution time. For example,
+	// `{"organizations/123/locations/global/cloudControls/control-1": {parameters:
+	// [...]}}`
+	ParameterOverrides map[string]ParameterOverrides `json:"parameterOverrides,omitempty"`
 	// ReportFormat: Required. Format for the audit report.
 	//
 	// Possible values:
@@ -727,6 +736,29 @@ func (s AuditScopeReport) MarshalJSON() ([]byte, error) {
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
+}
+
+// CloudControlParameterStates: Collection of parameter states for a cloud
+// control.
+type CloudControlParameterStates struct {
+	// ParameterStates: Output only. The parameter states for the cloud control.
+	ParameterStates []*ParameterState `json:"parameterStates,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ParameterStates") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ParameterStates") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudControlParameterStates) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudControlParameterStates
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Control: A control.
@@ -998,6 +1030,11 @@ type GenerateAuditReportRequest struct {
 	// uploaded. You must select a bucket that was provided during the enrollment
 	// process.
 	GcsUri string `json:"gcsUri,omitempty"`
+	// ParameterOverrides: Optional. Maps dynamic parameter overrides by Cloud
+	// Control resource name at execution time. For example,
+	// `{"organizations/123/locations/global/cloudControls/control-1": {parameters:
+	// [...]}}`
+	ParameterOverrides map[string]ParameterOverrides `json:"parameterOverrides,omitempty"`
 	// ReportFormat: Required. Format for the audit report.
 	//
 	// Possible values:
@@ -1044,6 +1081,11 @@ type GenerateAuditScopeReportRequest struct {
 	// regulatory requirements) that the audit scope report is run against. Use the
 	// `compliance_framework` field instead.
 	ComplianceStandard string `json:"complianceStandard,omitempty"`
+	// ParameterOverrides: Optional. Maps dynamic parameter overrides by Cloud
+	// Control resource name at execution time. For example,
+	// `{"organizations/123/locations/global/cloudControls/control-1": {parameters:
+	// [...]}}`
+	ParameterOverrides map[string]ParameterOverrides `json:"parameterOverrides,omitempty"`
 	// ReportFormat: Required. Format for the audit scope report.
 	//
 	// Possible values:
@@ -1384,6 +1426,124 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ParamValue: The possible parameter value types.
+type ParamValue struct {
+	// BoolValue: Optional. A boolean value.
+	BoolValue bool `json:"boolValue,omitempty"`
+	// NumberValue: Optional. A double value.
+	NumberValue float64 `json:"numberValue,omitempty"`
+	// OneofValue: Optional. Sub-parameter values.
+	OneofValue *Parameter `json:"oneofValue,omitempty"`
+	// StringListValue: Optional. A repeated string.
+	StringListValue *StringList `json:"stringListValue,omitempty"`
+	// StringValue: Optional. A string value.
+	StringValue string `json:"stringValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BoolValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BoolValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ParamValue) MarshalJSON() ([]byte, error) {
+	type NoMethod ParamValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *ParamValue) UnmarshalJSON(data []byte) error {
+	type NoMethod ParamValue
+	var s1 struct {
+		NumberValue gensupport.JSONFloat64 `json:"numberValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.NumberValue = float64(s1.NumberValue)
+	return nil
+}
+
+// Parameter: Parameters are key-value pairs that let you provide your custom
+// location requirements, environment requirements, or other settings that are
+// relevant to the cloud control.
+type Parameter struct {
+	// Name: Required. The name or key of the parameter.
+	Name string `json:"name,omitempty"`
+	// ParameterValue: Required. The value of the parameter.
+	ParameterValue *ParamValue `json:"parameterValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Parameter) MarshalJSON() ([]byte, error) {
+	type NoMethod Parameter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ParameterOverrides: Wrapper message to associate a list of CSC internal
+// parameter overrides with a control name.
+type ParameterOverrides struct {
+	// Parameters: The list of parameter overrides.
+	Parameters []*Parameter `json:"parameters,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Parameters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Parameters") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ParameterOverrides) MarshalJSON() ([]byte, error) {
+	type NoMethod ParameterOverrides
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ParameterState: State of a parameter for a cloud control.
+type ParameterState struct {
+	// IsOverridden: Output only. Whether this parameter was overridden by the
+	// user.
+	IsOverridden bool `json:"isOverridden,omitempty"`
+	// Parameter: Output only. The parameter key and value.
+	Parameter *Parameter `json:"parameter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsOverridden") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsOverridden") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ParameterState) MarshalJSON() ([]byte, error) {
+	type NoMethod ParameterState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ReportGenerationProgress: Details about the current status of the
 // report-generation process.
 type ReportGenerationProgress struct {
@@ -1620,6 +1780,28 @@ type Status struct {
 
 func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StringList: A list of strings for the parameter value.
+type StringList struct {
+	// Values: Required. The strings in the list.
+	Values []string `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StringList) MarshalJSON() ([]byte, error) {
+	type NoMethod StringList
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

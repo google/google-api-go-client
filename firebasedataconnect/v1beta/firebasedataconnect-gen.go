@@ -1699,7 +1699,10 @@ func (s Schema) MarshalJSON() ([]byte, error) {
 type Service struct {
 	// Annotations: Optional. Stores small amounts of arbitrary data.
 	Annotations map[string]string `json:"annotations,omitempty"`
-	// Connectors: Output only. The list of connectors in this service.
+	// Connectors: Output only. The list of connectors in this service. Connectors
+	// returned in this collection are a summary view. Authoritative lifecycle
+	// metadata and entity tags are omitted from embedded representations. Call
+	// `GetConnector` to retrieve the complete resource.
 	Connectors []*Connector `json:"connectors,omitempty"`
 	// CreateTime: Output only. [Output only] Create time stamp.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1724,7 +1727,10 @@ type Service struct {
 	// Reconciling: Output only. A field that if true, indicates that the system is
 	// working update the service.
 	Reconciling bool `json:"reconciling,omitempty"`
-	// Schemas: Optional. The list of schemas in this service.
+	// Schemas: Optional. The list of schemas in this service. Schemas returned in
+	// this collection are a summary view. Authoritative lifecycle metadata and
+	// entity tags are omitted from embedded representations. Call `GetSchema` to
+	// retrieve the complete resource.
 	Schemas []*Schema `json:"schemas,omitempty"`
 	// Source: Optional. Input only. Deprecated: Use `sql_source` or
 	// `graphql_source` instead. The source files for service, schemas, and

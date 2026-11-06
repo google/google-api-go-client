@@ -2237,6 +2237,18 @@ type LinkedInterconnectAttachments struct {
 	// IncludeImportRanges: Optional. Hub routes fully encompassed by include
 	// import ranges are included during import from hub.
 	IncludeImportRanges []string `json:"includeImportRanges,omitempty"`
+	// ProposedExcludeExportRanges: Output only. The proposed exclude export IP
+	// ranges waiting for hub administrator's approval.
+	ProposedExcludeExportRanges []string `json:"proposedExcludeExportRanges,omitempty"`
+	// ProposedExcludeImportRanges: Output only. The proposed exclude import IP
+	// ranges waiting for hub administrator's approval.
+	ProposedExcludeImportRanges []string `json:"proposedExcludeImportRanges,omitempty"`
+	// ProposedIncludeExportRanges: Output only. The proposed include export IP
+	// ranges waiting for hub administrator's approval.
+	ProposedIncludeExportRanges []string `json:"proposedIncludeExportRanges,omitempty"`
+	// ProposedIncludeImportRanges: Output only. The proposed include import IP
+	// ranges waiting for hub administrator's approval.
+	ProposedIncludeImportRanges []string `json:"proposedIncludeImportRanges,omitempty"`
 	// SiteToSiteDataTransfer: A value that controls whether site-to-site data
 	// transfer is enabled for these resources. Data transfer is available only in
 	// supported locations
@@ -2326,6 +2338,18 @@ type LinkedRouterApplianceInstances struct {
 	IncludeImportRanges []string `json:"includeImportRanges,omitempty"`
 	// Instances: The list of router appliance instances.
 	Instances []*RouterApplianceInstance `json:"instances,omitempty"`
+	// ProposedExcludeExportRanges: Output only. The proposed exclude export IP
+	// ranges waiting for hub administrator's approval.
+	ProposedExcludeExportRanges []string `json:"proposedExcludeExportRanges,omitempty"`
+	// ProposedExcludeImportRanges: Output only. The proposed exclude import IP
+	// ranges waiting for hub administrator's approval.
+	ProposedExcludeImportRanges []string `json:"proposedExcludeImportRanges,omitempty"`
+	// ProposedIncludeExportRanges: Output only. The proposed include export IP
+	// ranges waiting for hub administrator's approval.
+	ProposedIncludeExportRanges []string `json:"proposedIncludeExportRanges,omitempty"`
+	// ProposedIncludeImportRanges: Output only. The proposed include import IP
+	// ranges waiting for hub administrator's approval.
+	ProposedIncludeImportRanges []string `json:"proposedIncludeImportRanges,omitempty"`
 	// SiteToSiteDataTransfer: A value that controls whether site-to-site data
 	// transfer is enabled for these resources. Data transfer is available only in
 	// supported locations
@@ -2411,6 +2435,18 @@ type LinkedVpnTunnels struct {
 	// IncludeImportRanges: Optional. Hub routes fully encompassed by include
 	// import ranges are included during import from hub.
 	IncludeImportRanges []string `json:"includeImportRanges,omitempty"`
+	// ProposedExcludeExportRanges: Output only. The proposed exclude export IP
+	// ranges waiting for hub administrator's approval.
+	ProposedExcludeExportRanges []string `json:"proposedExcludeExportRanges,omitempty"`
+	// ProposedExcludeImportRanges: Output only. The proposed exclude import IP
+	// ranges waiting for hub administrator's approval.
+	ProposedExcludeImportRanges []string `json:"proposedExcludeImportRanges,omitempty"`
+	// ProposedIncludeExportRanges: Output only. The proposed include export IP
+	// ranges waiting for hub administrator's approval.
+	ProposedIncludeExportRanges []string `json:"proposedIncludeExportRanges,omitempty"`
+	// ProposedIncludeImportRanges: Output only. The proposed include import IP
+	// ranges waiting for hub administrator's approval.
+	ProposedIncludeImportRanges []string `json:"proposedIncludeImportRanges,omitempty"`
 	// SiteToSiteDataTransfer: A value that controls whether site-to-site data
 	// transfer is enabled for these resources. Data transfer is available only in
 	// supported locations

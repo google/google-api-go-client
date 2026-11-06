@@ -7501,6 +7501,8 @@ type ThumbnailDetails struct {
 	Medium *Thumbnail `json:"medium,omitempty"`
 	// Qhd: The quad high definition (1440p / 2K) quality image for this resource.
 	Qhd *Thumbnail `json:"qhd,omitempty"`
+	// ShortsAspectRatio: The Shorts aspect ratio (9:16) image for this resource.
+	ShortsAspectRatio *Thumbnail `json:"shortsAspectRatio,omitempty"`
 	// Standard: The standard quality image for this resource.
 	Standard *Thumbnail `json:"standard,omitempty"`
 	// Uhd: The ultra-high resolution (4K) quality image for this resource.

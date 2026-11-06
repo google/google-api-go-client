@@ -238,7 +238,7 @@ type ApigatewayApi struct {
 	// not specified, a new Service will automatically be created in the same
 	// project as this API.
 	ManagedService string `json:"managedService,omitempty"`
-	// Name: Output only. Resource name of the API. Format:
+	// Name: Identifier. Resource name of the API. Format:
 	// projects/{project}/locations/global/apis/{api}
 	Name string `json:"name,omitempty"`
 	// State: Output only. State of the API.
@@ -305,7 +305,7 @@ type ApigatewayApiConfig struct {
 	// Repeated fields are concatenated. * Singular embedded messages are merged
 	// using these rules for nested fields.
 	ManagedServiceConfigs []*ApigatewayApiConfigFile `json:"managedServiceConfigs,omitempty"`
-	// Name: Output only. Resource name of the API Config. Format:
+	// Name: Identifier. Resource name of the API Config. Format:
 	// projects/{project}/locations/global/apis/{api}/configs/{api_config}
 	Name string `json:"name,omitempty"`
 	// OpenapiDocuments: Optional. OpenAPI specification documents. If specified,
@@ -691,7 +691,7 @@ type ApigatewayGateway struct {
 	// to cloud documentation on labels for more details.
 	// https://cloud.google.com/compute/docs/labeling-resources
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Output only. Resource name of the Gateway. Format:
+	// Name: Identifier. Resource name of the Gateway. Format:
 	// projects/{project}/locations/{location}/gateways/{gateway}
 	Name string `json:"name,omitempty"`
 	// State: Output only. The current state of the Gateway.
@@ -2170,7 +2170,7 @@ type ProjectsLocationsApisPatchCall struct {
 
 // Patch: Updates the parameters of a single Api.
 //
-//   - name: Output only. Resource name of the API. Format:
+//   - name: Identifier. Resource name of the API. Format:
 //     projects/{project}/locations/global/apis/{api}.
 func (r *ProjectsLocationsApisService) Patch(name string, apigatewayapi *ApigatewayApi) *ProjectsLocationsApisPatchCall {
 	c := &ProjectsLocationsApisPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2182,8 +2182,8 @@ func (r *ProjectsLocationsApisService) Patch(name string, apigatewayapi *Apigate
 // UpdateMask sets the optional parameter "updateMask": Field mask is used to
 // specify the fields to be overwritten in the Api resource by the update. The
 // fields specified in the update_mask are relative to the resource, not the
-// full request. A field will be overwritten if it is in the mask. If the user
-// does not provide a mask then all fields will be overwritten.
+// full request. A field will be overwritten if it is in the mask. The request
+// fails if `update_mask` is missing or empty.
 func (c *ProjectsLocationsApisPatchCall) UpdateMask(updateMask string) *ProjectsLocationsApisPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -3126,7 +3126,7 @@ type ProjectsLocationsApisConfigsPatchCall struct {
 
 // Patch: Updates the parameters of a single ApiConfig.
 //
-//   - name: Output only. Resource name of the API Config. Format:
+//   - name: Identifier. Resource name of the API Config. Format:
 //     projects/{project}/locations/global/apis/{api}/configs/{api_config}.
 func (r *ProjectsLocationsApisConfigsService) Patch(name string, apigatewayapiconfig *ApigatewayApiConfig) *ProjectsLocationsApisConfigsPatchCall {
 	c := &ProjectsLocationsApisConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3139,8 +3139,7 @@ func (r *ProjectsLocationsApisConfigsService) Patch(name string, apigatewayapico
 // specify the fields to be overwritten in the ApiConfig resource by the
 // update. The fields specified in the update_mask are relative to the
 // resource, not the full request. A field will be overwritten if it is in the
-// mask. If the user does not provide a mask then all fields will be
-// overwritten.
+// mask. The request fails if `update_mask` is missing or empty.
 func (c *ProjectsLocationsApisConfigsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsApisConfigsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4067,7 +4066,7 @@ type ProjectsLocationsGatewaysPatchCall struct {
 
 // Patch: Updates the parameters of a single Gateway.
 //
-//   - name: Output only. Resource name of the Gateway. Format:
+//   - name: Identifier. Resource name of the Gateway. Format:
 //     projects/{project}/locations/{location}/gateways/{gateway}.
 func (r *ProjectsLocationsGatewaysService) Patch(name string, apigatewaygateway *ApigatewayGateway) *ProjectsLocationsGatewaysPatchCall {
 	c := &ProjectsLocationsGatewaysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4079,8 +4078,8 @@ func (r *ProjectsLocationsGatewaysService) Patch(name string, apigatewaygateway 
 // UpdateMask sets the optional parameter "updateMask": Field mask is used to
 // specify the fields to be overwritten in the Gateway resource by the update.
 // The fields specified in the update_mask are relative to the resource, not
-// the full request. A field will be overwritten if it is in the mask. If the
-// user does not provide a mask then all fields will be overwritten.
+// the full request. A field will be overwritten if it is in the mask. The
+// request fails if `update_mask` is missing or empty.
 func (c *ProjectsLocationsGatewaysPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGatewaysPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

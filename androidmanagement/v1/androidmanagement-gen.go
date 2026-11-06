@@ -3146,8 +3146,11 @@ type DeviceConnectivityManagement struct {
 	WifiRoamingPolicy *WifiRoamingPolicy `json:"wifiRoamingPolicy,omitempty"`
 	// WifiSsidPolicy: Optional. Restrictions on which Wi-Fi SSIDs the device can
 	// connect to. Note that this does not affect which networks can be configured
-	// on the device. Supported on company-owned devices running Android 13 and
-	// above.
+	// on the device.Supported on Android 13 (API level 33) and higher on fully
+	// managed devices and work profiles on company-owned devices. A
+	// NonComplianceDetail with MANAGEMENT_MODE is reported on other management
+	// modes. A NonComplianceDetail with API_LEVEL is reported if the Android
+	// version is less than 13 (API level 33).
 	WifiSsidPolicy *WifiSsidPolicy `json:"wifiSsidPolicy,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApnPolicy") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -9433,7 +9436,8 @@ func (s WifiSsid) MarshalJSON() ([]byte, error) {
 
 // WifiSsidPolicy: Restrictions on which Wi-Fi SSIDs the device can connect to.
 // Note that this does not affect which networks can be configured on the
-// device. Supported on company-owned devices running Android 13 and above.
+// device. Supported on Android 13 (API level 33) and higher on fully managed
+// devices and work profiles on company-owned devices.
 type WifiSsidPolicy struct {
 	// WifiSsidPolicyType: Optional. Type of the Wi-Fi SSID policy to be applied.
 	//
@@ -9448,11 +9452,8 @@ type WifiSsidPolicy struct {
 	// to connect to any other Wi-Fi network.
 	WifiSsidPolicyType string `json:"wifiSsidPolicyType,omitempty"`
 	// WifiSsids: Optional. List of Wi-Fi SSIDs that should be applied in the
-	// policy. This field must be non-empty when WifiSsidPolicyType is set to
-	// WIFI_SSID_ALLOWLIST. If this is set to a non-empty list, then a
-	// NonComplianceDetail detail with API_LEVEL is reported if the Android version
-	// is less than 13 and a NonComplianceDetail with MANAGEMENT_MODE is reported
-	// for non-company-owned devices.
+	// policy. This field must be non-empty when wifiSsidPolicyType is set to
+	// WIFI_SSID_ALLOWLIST.
 	WifiSsids []*WifiSsid `json:"wifiSsids,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "WifiSsidPolicyType") to
 	// unconditionally include in API requests. By default, fields with empty or

@@ -396,6 +396,11 @@ type GoogleCloudAiplatformV1beta1AudioTranscriptionConfig struct {
 	//   "VERBATIM" - Verbatim transcription mode.
 	//   "SMART" - Smart transcription mode.
 	Mode string `json:"mode,omitempty"`
+	// SourceText: Optional. The source text to be edited or rewritten via voice
+	// instructions. When provided in `SMART` mode, the model evaluates the audio
+	// input against this text and emits the complete replacement text in the
+	// candidate response rather than appending to it.
+	SourceText string `json:"sourceText,omitempty"`
 	// WordTimestamp: Optional. Configures word-level timestamp generation.
 	WordTimestamp bool `json:"wordTimestamp,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdaptationPhrases") to

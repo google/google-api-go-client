@@ -874,9 +874,9 @@ type Cluster struct {
 	// GcpConfig: Required. Configuration properties for a Kafka cluster deployed
 	// to Google Cloud Platform.
 	GcpConfig *GcpConfig `json:"gcpConfig,omitempty"`
-	// KafkaVersion: Optional. The Apache Kafka version of the cluster (for
-	// example, `3.7.x`, `4.3.x`). If not specified during cluster creation,
-	// defaults to `3.7.x`.
+	// KafkaVersion: Optional. The Apache Kafka version of the cluster.
+	// Specifically, this value is the finalized metadata version. If not specified
+	// during cluster creation, defaults to `3.7.x`. Supported values: `3.7.x`.
 	KafkaVersion string `json:"kafkaVersion,omitempty"`
 	// Labels: Optional. Labels as key value pairs.
 	Labels map[string]string `json:"labels,omitempty"`

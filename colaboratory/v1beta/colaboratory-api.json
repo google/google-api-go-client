@@ -140,7 +140,7 @@
           ]
         },
         "delete": {
-          "description": "Deletes a Colab runtime assignment. **Best Practices:** - Avoid deleting runtimes unless necessary. Reuse runtimes for efficiency. - Create a new Jupyter session within an existing runtime for state isolation.",
+          "description": "Deletes a Colab runtime assignment. **Best Practices:** - Avoid deleting runtimes unless necessary. Reuse runtimes for efficiency. - Open a new Jupyter session on an existing runtime for state isolation.",
           "flatPath": "v1beta/runtimes/{runtimesId}",
           "httpMethod": "DELETE",
           "id": "colaboratory.runtimes.delete",
@@ -264,7 +264,7 @@
       }
     }
   },
-  "revision": "20261102",
+  "revision": "20261104",
   "rootUrl": "https://colaboratory.googleapis.com/",
   "schemas": {
     "ConnectionInfo": {
@@ -437,7 +437,7 @@
         },
         "runtimeSpec": {
           "$ref": "Key",
-          "description": "Required. The specification of the runtime."
+          "description": "Required. The specification of the runtime. When calling `CreateRuntime`, this field should be set to an eligible runtime spec obtained from the ListRuntimeSpecsResponse."
         },
         "version": {
           "description": "Optional. The version of the runtime image. See [Colab Runtime Version FAQ](https://research.google.com/colaboratory/runtime-version-faq.html) for supported runtime versions. If omitted (empty), the latest runtime image is used.",

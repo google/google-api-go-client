@@ -498,6 +498,43 @@ func (s Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// LoggingConfig: Configuration for Cloud Logging on the Server.
+type LoggingConfig struct {
+	// Enabled: Optional. Whether platform logging
+	// (`ftp.googleapis.com/ftp_events`) is enabled for this server. Defaults to
+	// `false`.
+	Enabled bool `json:"enabled,omitempty"`
+	// Verbosity: Optional. The verbosity level of logs emitted when `enabled` is
+	// `true`. Defaults to `ALL_EVENTS` if unspecified when `enabled` is `true`.
+	//
+	// Possible values:
+	//   "LOG_VERBOSITY_UNSPECIFIED" - Default value. Defaults to `ALL_EVENTS` when
+	// logging is `enabled`.
+	//   "ALL_EVENTS" - Logs all SFTP events, including authentication, session
+	// lifecycle, file transfers, and directory/metadata commands.
+	//   "TRANSFERS_AND_AUTH_ONLY" - Logs authentication, session lifecycle, file
+	// transfers, and failed commands. Suppresses successful non-transfer commands
+	// (such as LIST or STAT).
+	//   "ERRORS_ONLY" - Logs only failed operations and errors.
+	Verbosity string `json:"verbosity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LoggingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod LoggingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This resource represents a long-running operation that is the
 // result of a network API call.
 type Operation struct {
@@ -633,6 +670,8 @@ type Server struct {
 	InternalConfig *InternalServerConfig `json:"internalConfig,omitempty"`
 	// Labels: Optional. Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
+	// LoggingConfig: Optional. Configuration for Cloud Logging on the Server.
+	LoggingConfig *LoggingConfig `json:"loggingConfig,omitempty"`
 	// Name: Identifier. name of resource
 	Name string `json:"name,omitempty"`
 	// SatisfiesPzi: Output only. Reserved for future use.
@@ -2656,8 +2695,8 @@ func (r *ProjectsLocationsServersUsersService) Delete(name string) *ProjectsLoca
 	return c
 }
 
-// Force sets the optional parameter "force": If set to true, the request will
-// force the deletion of the User.
+// Force sets the optional parameter "force": If set to `true`, the request
+// will `force` the deletion of the User.
 func (c *ProjectsLocationsServersUsersDeleteCall) Force(force bool) *ProjectsLocationsServersUsersDeleteCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c
