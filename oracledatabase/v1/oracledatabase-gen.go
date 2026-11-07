@@ -1899,6 +1899,13 @@ type CloudVmCluster struct {
 	// IdentityConnector: Output only. The identity connector details which will
 	// allow OCI to securely access the resources in the customer project.
 	IdentityConnector *IdentityConnector `json:"identityConnector,omitempty"`
+	// IdentityConnectorDisabled: Optional. Input only. Immutable. If set to true,
+	// disables the automatic provisioning of the Workload Identity Connector
+	// during creation. If set to false or omitted, the Workload Identity Connector
+	// will be automatically provisioned by default. Note: Provisioning the
+	// Workload Identity Connector is a prerequisite for enabling Google Cloud
+	// CMEK.
+	IdentityConnectorDisabled bool `json:"identityConnectorDisabled,omitempty"`
 	// Labels: Optional. Labels or tags associated with the VM Cluster.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. The name of the VM Cluster resource with the format:
@@ -3427,6 +3434,16 @@ func (s DeploymentDiagnosticData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DisableCloudVmClusterIdentityConnectorRequest: The request for
+// `CloudVmCluster.DisableCloudVmClusterIdentityConnector`.
+type DisableCloudVmClusterIdentityConnectorRequest struct {
+}
+
+// DisableExadbVmClusterIdentityConnectorRequest: The request for
+// `ExadbVmCluster.DisableExadbVmClusterIdentityConnector`.
+type DisableExadbVmClusterIdentityConnectorRequest struct {
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -3434,6 +3451,16 @@ func (s DeploymentDiagnosticData) MarshalJSON() ([]byte, error) {
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// EnableCloudVmClusterIdentityConnectorRequest: The request for
+// `CloudVmCluster.EnableCloudVmClusterIdentityConnector`.
+type EnableCloudVmClusterIdentityConnectorRequest struct {
+}
+
+// EnableExadbVmClusterIdentityConnectorRequest: The request for
+// `ExadbVmCluster.EnableExadbVmClusterIdentityConnector`.
+type EnableExadbVmClusterIdentityConnectorRequest struct {
 }
 
 // EncryptionKey: The encryption key used to encrypt the Autonomous Database.
@@ -3562,6 +3589,13 @@ type ExadbVmCluster struct {
 	// IdentityConnector: Output only. The identity connector details which will
 	// allow OCI to securely access the resources in the customer project.
 	IdentityConnector *IdentityConnector `json:"identityConnector,omitempty"`
+	// IdentityConnectorDisabled: Optional. Input only. Immutable. If set to true,
+	// disables the automatic provisioning of the Workload Identity Connector
+	// during creation. If set to false or omitted, the Workload Identity Connector
+	// will be automatically provisioned by default. Note: Provisioning the
+	// Workload Identity Connector is a prerequisite for enabling Google Cloud
+	// CMEK.
+	IdentityConnectorDisabled bool `json:"identityConnectorDisabled,omitempty"`
 	// Labels: Optional. The labels or tags associated with the ExadbVmCluster.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. The name of the ExadbVmCluster resource in the following
@@ -6929,10 +6963,25 @@ type IdentityConnector struct {
 	//   "DISCONNECTED" - The identity pool connection is disconnected.
 	//   "UNKNOWN" - The identity pool connection is in an unknown state.
 	ConnectionState string `json:"connectionState,omitempty"`
+	// IdentityConnectorId: Output only. The unique partner identifier for the
+	// Identity Connector, used to establish secure cross-cloud access between
+	// Google Cloud and OCI. This corresponds directly to the ID of the
+	// OracleDbGcpIdentityConnector resource in Oracle Cloud Infrastructure (OCI).
+	IdentityConnectorId string `json:"identityConnectorId,omitempty"`
+	// LifecycleStateDetails: Output only. Additional information about the current
+	// lifecycle state.
+	LifecycleStateDetails string `json:"lifecycleStateDetails,omitempty"`
 	// ServiceAgentEmail: Output only. A google managed service account on which
 	// customers can grant roles to access resources in the customer project.
 	// Example: `p176944527254-55-75119d87fd8f@gcp-sa-oci.iam.gserviceaccount.com`
 	ServiceAgentEmail string `json:"serviceAgentEmail,omitempty"`
+	// WorkloadIdentityPool: Output only. The resource name of the Workload
+	// Identity Pool configured for identity federation with OCI. This exact pool
+	// name can be used to configure VPC Service Controls (VPC-SC) egress rules.
+	// Format:
+	// `projects/{project}/locations/global/workloadIdentityPools/{workload_identity
+	// _pool}`
+	WorkloadIdentityPool string `json:"workloadIdentityPool,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConnectionState") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -12944,6 +12993,216 @@ func (c *ProjectsLocationsCloudVmClustersDeleteCall) Do(opts ...googleapi.CallOp
 	return ret, nil
 }
 
+type ProjectsLocationsCloudVmClustersDisableIdentityConnectorCall struct {
+	s                                             *Service
+	name                                          string
+	disablecloudvmclusteridentityconnectorrequest *DisableCloudVmClusterIdentityConnectorRequest
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// DisableIdentityConnector: Disables the Workload Identity Connector for a
+// Cloud VM Cluster.
+//
+//   - name: The name of the Cloud VM Cluster in the following format:
+//     projects/{project}/locations/{location}/cloudVmClusters/{cloud_vm_cluster}.
+func (r *ProjectsLocationsCloudVmClustersService) DisableIdentityConnector(name string, disablecloudvmclusteridentityconnectorrequest *DisableCloudVmClusterIdentityConnectorRequest) *ProjectsLocationsCloudVmClustersDisableIdentityConnectorCall {
+	c := &ProjectsLocationsCloudVmClustersDisableIdentityConnectorCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.disablecloudvmclusteridentityconnectorrequest = disablecloudvmclusteridentityconnectorrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCloudVmClustersDisableIdentityConnectorCall) Fields(s ...googleapi.Field) *ProjectsLocationsCloudVmClustersDisableIdentityConnectorCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCloudVmClustersDisableIdentityConnectorCall) Context(ctx context.Context) *ProjectsLocationsCloudVmClustersDisableIdentityConnectorCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCloudVmClustersDisableIdentityConnectorCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCloudVmClustersDisableIdentityConnectorCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.disablecloudvmclusteridentityconnectorrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:disableIdentityConnector")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.cloudVmClusters.disableIdentityConnector", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.cloudVmClusters.disableIdentityConnector" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCloudVmClustersDisableIdentityConnectorCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.cloudVmClusters.disableIdentityConnector", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCloudVmClustersEnableIdentityConnectorCall struct {
+	s                                            *Service
+	name                                         string
+	enablecloudvmclusteridentityconnectorrequest *EnableCloudVmClusterIdentityConnectorRequest
+	urlParams_                                   gensupport.URLParams
+	ctx_                                         context.Context
+	header_                                      http.Header
+}
+
+// EnableIdentityConnector: Enables the Workload Identity Connector for a Cloud
+// VM Cluster.
+//
+//   - name: The name of the Cloud VM Cluster in the following format:
+//     projects/{project}/locations/{location}/cloudVmClusters/{cloud_vm_cluster}.
+func (r *ProjectsLocationsCloudVmClustersService) EnableIdentityConnector(name string, enablecloudvmclusteridentityconnectorrequest *EnableCloudVmClusterIdentityConnectorRequest) *ProjectsLocationsCloudVmClustersEnableIdentityConnectorCall {
+	c := &ProjectsLocationsCloudVmClustersEnableIdentityConnectorCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.enablecloudvmclusteridentityconnectorrequest = enablecloudvmclusteridentityconnectorrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCloudVmClustersEnableIdentityConnectorCall) Fields(s ...googleapi.Field) *ProjectsLocationsCloudVmClustersEnableIdentityConnectorCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCloudVmClustersEnableIdentityConnectorCall) Context(ctx context.Context) *ProjectsLocationsCloudVmClustersEnableIdentityConnectorCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCloudVmClustersEnableIdentityConnectorCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCloudVmClustersEnableIdentityConnectorCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.enablecloudvmclusteridentityconnectorrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:enableIdentityConnector")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.cloudVmClusters.enableIdentityConnector", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.cloudVmClusters.enableIdentityConnector" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCloudVmClustersEnableIdentityConnectorCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.cloudVmClusters.enableIdentityConnector", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsCloudVmClustersGetCall struct {
 	s            *Service
 	name         string
@@ -16402,6 +16661,216 @@ func (c *ProjectsLocationsExadbVmClustersDeleteCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exadbVmClusters.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsExadbVmClustersDisableIdentityConnectorCall struct {
+	s                                             *Service
+	name                                          string
+	disableexadbvmclusteridentityconnectorrequest *DisableExadbVmClusterIdentityConnectorRequest
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// DisableIdentityConnector: Disables the Workload Identity Connector for an
+// Exadb VM Cluster.
+//
+//   - name: The name of the Exadb VM Cluster in the following format:
+//     projects/{project}/locations/{location}/exadbVmClusters/{exadb_vm_cluster}.
+func (r *ProjectsLocationsExadbVmClustersService) DisableIdentityConnector(name string, disableexadbvmclusteridentityconnectorrequest *DisableExadbVmClusterIdentityConnectorRequest) *ProjectsLocationsExadbVmClustersDisableIdentityConnectorCall {
+	c := &ProjectsLocationsExadbVmClustersDisableIdentityConnectorCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.disableexadbvmclusteridentityconnectorrequest = disableexadbvmclusteridentityconnectorrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsExadbVmClustersDisableIdentityConnectorCall) Fields(s ...googleapi.Field) *ProjectsLocationsExadbVmClustersDisableIdentityConnectorCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsExadbVmClustersDisableIdentityConnectorCall) Context(ctx context.Context) *ProjectsLocationsExadbVmClustersDisableIdentityConnectorCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsExadbVmClustersDisableIdentityConnectorCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsExadbVmClustersDisableIdentityConnectorCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.disableexadbvmclusteridentityconnectorrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:disableIdentityConnector")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exadbVmClusters.disableIdentityConnector", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.exadbVmClusters.disableIdentityConnector" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsExadbVmClustersDisableIdentityConnectorCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exadbVmClusters.disableIdentityConnector", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsExadbVmClustersEnableIdentityConnectorCall struct {
+	s                                            *Service
+	name                                         string
+	enableexadbvmclusteridentityconnectorrequest *EnableExadbVmClusterIdentityConnectorRequest
+	urlParams_                                   gensupport.URLParams
+	ctx_                                         context.Context
+	header_                                      http.Header
+}
+
+// EnableIdentityConnector: Enables the Workload Identity Connector for an
+// Exadb VM Cluster.
+//
+//   - name: The name of the Exadb VM Cluster in the following format:
+//     projects/{project}/locations/{location}/exadbVmClusters/{exadb_vm_cluster}.
+func (r *ProjectsLocationsExadbVmClustersService) EnableIdentityConnector(name string, enableexadbvmclusteridentityconnectorrequest *EnableExadbVmClusterIdentityConnectorRequest) *ProjectsLocationsExadbVmClustersEnableIdentityConnectorCall {
+	c := &ProjectsLocationsExadbVmClustersEnableIdentityConnectorCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.enableexadbvmclusteridentityconnectorrequest = enableexadbvmclusteridentityconnectorrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsExadbVmClustersEnableIdentityConnectorCall) Fields(s ...googleapi.Field) *ProjectsLocationsExadbVmClustersEnableIdentityConnectorCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsExadbVmClustersEnableIdentityConnectorCall) Context(ctx context.Context) *ProjectsLocationsExadbVmClustersEnableIdentityConnectorCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsExadbVmClustersEnableIdentityConnectorCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsExadbVmClustersEnableIdentityConnectorCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.enableexadbvmclusteridentityconnectorrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:enableIdentityConnector")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exadbVmClusters.enableIdentityConnector", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.exadbVmClusters.enableIdentityConnector" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsExadbVmClustersEnableIdentityConnectorCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exadbVmClusters.enableIdentityConnector", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

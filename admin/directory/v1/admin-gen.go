@@ -17614,8 +17614,7 @@ type UsersCreateGuestCall struct {
 }
 
 // CreateGuest: Create a guest user with access to a subset of Workspace
-// capabilities (https://support.google.com/a/answer/16558545). This feature is
-// currently in Open Beta.
+// capabilities (https://support.google.com/a/answer/16558545).
 func (r *UsersService) CreateGuest(directoryuserscreateguestrequest *DirectoryUsersCreateGuestRequest) *UsersCreateGuestCall {
 	c := &UsersCreateGuestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.directoryuserscreateguestrequest = directoryuserscreateguestrequest

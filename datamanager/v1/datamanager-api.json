@@ -915,7 +915,7 @@
       }
     }
   },
-  "revision": "20261103",
+  "revision": "20261106",
   "rootUrl": "https://datamanager.googleapis.com/",
   "schemas": {
     "AdEvent": {
@@ -1975,9 +1975,29 @@
             "WARNING_REASON_INVALID_DEVICE_CATEGORY",
             "WARNING_REASON_INVALID_DEVICE_SCREEN_RESOLUTION",
             "WARNING_REASON_INVALID_MERCHANT_ID",
-            "WARNING_REASON_INVALID_NUMBER_FORMAT"
+            "WARNING_REASON_INVALID_NUMBER_FORMAT",
+            "WARNING_REASON_INVALID_SHA256_FORMAT",
+            "WARNING_REASON_INVALID_MERCHANT_FEED_LANGUAGE_CODE",
+            "WARNING_REASON_FIELD_VALUE_TOO_LONG",
+            "WARNING_REASON_FIELD_VALUE_TOO_SHORT",
+            "WARNING_REASON_VALUE_TOO_HIGH",
+            "WARNING_REASON_VALUE_TOO_LOW",
+            "WARNING_REASON_TOO_MANY_ELEMENTS",
+            "WARNING_REASON_DUPLICATE_ELEMENTS",
+            "WARNING_REASON_CUSTOM_VARIABLES_NOT_SUPPORTED_WITH_GBRAID_OR_WBRAID",
+            "WARNING_REASON_ADIDENTIFIER_NOT_USED"
           ],
           "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
             "",
             "",
             "",
