@@ -5,6 +5,18 @@
         "https://www.googleapis.com/auth/chrome.management.appdetails.readonly": {
           "description": "See detailed information about apps installed on Chrome browsers and devices managed by your organization"
         },
+        "https://www.googleapis.com/auth/chrome.management.browsers": {
+          "description": "See, edit, delete, and take other necessary actions on Chrome browsers managed by your organization"
+        },
+        "https://www.googleapis.com/auth/chrome.management.browsers.readonly": {
+          "description": "See Chrome browsers managed by your organization"
+        },
+        "https://www.googleapis.com/auth/chrome.management.enrollmenttokens": {
+          "description": "See, edit, revoke, and take other necessary actions on Chrome enrollment tokens managed by your organization"
+        },
+        "https://www.googleapis.com/auth/chrome.management.enrollmenttokens.readonly": {
+          "description": "See Chrome enrollment tokens managed by your organization"
+        },
         "https://www.googleapis.com/auth/chrome.management.profiles": {
           "description": "See, edit, delete, and take other necessary actions on Chrome browser profiles managed by your organization"
         },
@@ -532,7 +544,10 @@
               "path": "v1/{+name}",
               "response": {
                 "$ref": "GoogleProtobufEmpty"
-              }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/chrome.management.browsers"
+              ]
             },
             "get": {
               "description": "Retrieves a single Chrome Browser identified by its customer ID and resource ID.",
@@ -554,7 +569,11 @@
               "path": "v1/{+name}",
               "response": {
                 "$ref": "GoogleChromeManagementVersionsV1ChromeBrowser"
-              }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/chrome.management.browsers",
+                "https://www.googleapis.com/auth/chrome.management.browsers.readonly"
+              ]
             },
             "list": {
               "description": "Retrieves all Chrome Browsers of a customer (paginated).",
@@ -597,7 +616,11 @@
               "path": "v1/{+parent}/chromeBrowsers",
               "response": {
                 "$ref": "GoogleChromeManagementVersionsV1ListChromeBrowsersResponse"
-              }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/chrome.management.browsers",
+                "https://www.googleapis.com/auth/chrome.management.browsers.readonly"
+              ]
             },
             "move": {
               "description": "Moves managed Chrome Browsers to a new Organizational Unit (OU). If there is an error while moving any of the browsers, none of the browsers will be moved.",
@@ -622,7 +645,10 @@
               },
               "response": {
                 "$ref": "GoogleChromeManagementVersionsV1MoveChromeBrowsersResponse"
-              }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/chrome.management.browsers"
+              ]
             },
             "patch": {
               "description": "Updates annotation information for a Chrome Browser.",
@@ -653,7 +679,10 @@
               },
               "response": {
                 "$ref": "GoogleChromeManagementVersionsV1ChromeBrowser"
-              }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/chrome.management.browsers"
+              ]
             }
           }
         },
@@ -829,7 +858,10 @@
               },
               "response": {
                 "$ref": "GoogleChromeManagementVersionsV1EnrollmentToken"
-              }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/chrome.management.enrollmenttokens"
+              ]
             },
             "get": {
               "description": "Gets a browser device enrollment token.",
@@ -851,7 +883,11 @@
               "path": "v1/{+name}",
               "response": {
                 "$ref": "GoogleChromeManagementVersionsV1EnrollmentToken"
-              }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/chrome.management.enrollmenttokens",
+                "https://www.googleapis.com/auth/chrome.management.enrollmenttokens.readonly"
+              ]
             },
             "list": {
               "description": "Lists all browser device enrollment tokens.",
@@ -889,7 +925,11 @@
               "path": "v1/{+parent}/enrollmentTokens",
               "response": {
                 "$ref": "GoogleChromeManagementVersionsV1ListEnrollmentTokensResponse"
-              }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/chrome.management.enrollmenttokens",
+                "https://www.googleapis.com/auth/chrome.management.enrollmenttokens.readonly"
+              ]
             },
             "revoke": {
               "description": "Revokes a browser device enrollment token.",
@@ -914,7 +954,10 @@
               },
               "response": {
                 "$ref": "GoogleChromeManagementVersionsV1EnrollmentToken"
-              }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/chrome.management.enrollmenttokens"
+              ]
             }
           }
         },
@@ -2823,7 +2866,7 @@
       }
     }
   },
-  "revision": "20261101",
+  "revision": "20261104",
   "rootUrl": "https://chromemanagement.googleapis.com/",
   "schemas": {
     "GoogleChromeManagementV1AndroidAppInfo": {

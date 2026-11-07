@@ -107,6 +107,20 @@ const (
 	// managed by your organization
 	ChromeManagementAppdetailsReadonlyScope = "https://www.googleapis.com/auth/chrome.management.appdetails.readonly"
 
+	// See, edit, delete, and take other necessary actions on Chrome browsers
+	// managed by your organization
+	ChromeManagementBrowsersScope = "https://www.googleapis.com/auth/chrome.management.browsers"
+
+	// See Chrome browsers managed by your organization
+	ChromeManagementBrowsersReadonlyScope = "https://www.googleapis.com/auth/chrome.management.browsers.readonly"
+
+	// See, edit, revoke, and take other necessary actions on Chrome enrollment
+	// tokens managed by your organization
+	ChromeManagementEnrollmenttokensScope = "https://www.googleapis.com/auth/chrome.management.enrollmenttokens"
+
+	// See Chrome enrollment tokens managed by your organization
+	ChromeManagementEnrollmenttokensReadonlyScope = "https://www.googleapis.com/auth/chrome.management.enrollmenttokens.readonly"
+
 	// See, edit, delete, and take other necessary actions on Chrome browser
 	// profiles managed by your organization
 	ChromeManagementProfilesScope = "https://www.googleapis.com/auth/chrome.management.profiles"
@@ -133,6 +147,10 @@ const (
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/chrome.management.appdetails.readonly",
+		"https://www.googleapis.com/auth/chrome.management.browsers",
+		"https://www.googleapis.com/auth/chrome.management.browsers.readonly",
+		"https://www.googleapis.com/auth/chrome.management.enrollmenttokens",
+		"https://www.googleapis.com/auth/chrome.management.enrollmenttokens.readonly",
 		"https://www.googleapis.com/auth/chrome.management.profiles",
 		"https://www.googleapis.com/auth/chrome.management.profiles.readonly",
 		"https://www.googleapis.com/auth/chrome.management.reports.readonly",

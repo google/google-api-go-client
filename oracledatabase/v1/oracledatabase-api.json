@@ -1108,6 +1108,62 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
+                "disableIdentityConnector": {
+                  "description": "Disables the Workload Identity Connector for a Cloud VM Cluster.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/cloudVmClusters/{cloudVmClustersId}:disableIdentityConnector",
+                  "httpMethod": "POST",
+                  "id": "oracledatabase.projects.locations.cloudVmClusters.disableIdentityConnector",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the Cloud VM Cluster in the following format: projects/{project}/locations/{location}/cloudVmClusters/{cloud_vm_cluster}",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/cloudVmClusters/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}:disableIdentityConnector",
+                  "request": {
+                    "$ref": "DisableCloudVmClusterIdentityConnectorRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "enableIdentityConnector": {
+                  "description": "Enables the Workload Identity Connector for a Cloud VM Cluster.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/cloudVmClusters/{cloudVmClustersId}:enableIdentityConnector",
+                  "httpMethod": "POST",
+                  "id": "oracledatabase.projects.locations.cloudVmClusters.enableIdentityConnector",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the Cloud VM Cluster in the following format: projects/{project}/locations/{location}/cloudVmClusters/{cloud_vm_cluster}",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/cloudVmClusters/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}:enableIdentityConnector",
+                  "request": {
+                    "$ref": "EnableCloudVmClusterIdentityConnectorRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "get": {
                   "description": "Gets details of a single VM Cluster.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/cloudVmClusters/{cloudVmClustersId}",
@@ -2070,6 +2126,62 @@
                     }
                   },
                   "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "disableIdentityConnector": {
+                  "description": "Disables the Workload Identity Connector for an Exadb VM Cluster.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/exadbVmClusters/{exadbVmClustersId}:disableIdentityConnector",
+                  "httpMethod": "POST",
+                  "id": "oracledatabase.projects.locations.exadbVmClusters.disableIdentityConnector",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the Exadb VM Cluster in the following format: projects/{project}/locations/{location}/exadbVmClusters/{exadb_vm_cluster}",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/exadbVmClusters/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}:disableIdentityConnector",
+                  "request": {
+                    "$ref": "DisableExadbVmClusterIdentityConnectorRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "enableIdentityConnector": {
+                  "description": "Enables the Workload Identity Connector for an Exadb VM Cluster.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/exadbVmClusters/{exadbVmClustersId}:enableIdentityConnector",
+                  "httpMethod": "POST",
+                  "id": "oracledatabase.projects.locations.exadbVmClusters.enableIdentityConnector",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the Exadb VM Cluster in the following format: projects/{project}/locations/{location}/exadbVmClusters/{exadb_vm_cluster}",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/exadbVmClusters/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}:enableIdentityConnector",
+                  "request": {
+                    "$ref": "EnableExadbVmClusterIdentityConnectorRequest"
+                  },
                   "response": {
                     "$ref": "Operation"
                   },
@@ -4100,7 +4212,7 @@
       }
     }
   },
-  "revision": "20261101",
+  "revision": "20261104",
   "rootUrl": "https://oracledatabase.googleapis.com/",
   "schemas": {
     "AllConnectionStrings": {
@@ -5647,6 +5759,10 @@
           "$ref": "IdentityConnector",
           "description": "Output only. The identity connector details which will allow OCI to securely access the resources in the customer project.",
           "readOnly": true
+        },
+        "identityConnectorDisabled": {
+          "description": "Optional. Input only. Immutable. If set to true, disables the automatic provisioning of the Workload Identity Connector during creation. If set to false or omitted, the Workload Identity Connector will be automatically provisioned by default. Note: Provisioning the Workload Identity Connector is a prerequisite for enabling Google Cloud CMEK.",
+          "type": "boolean"
         },
         "labels": {
           "additionalProperties": {
@@ -7380,9 +7496,33 @@
       },
       "type": "object"
     },
+    "DisableCloudVmClusterIdentityConnectorRequest": {
+      "description": "The request for `CloudVmCluster.DisableCloudVmClusterIdentityConnector`.",
+      "id": "DisableCloudVmClusterIdentityConnectorRequest",
+      "properties": {},
+      "type": "object"
+    },
+    "DisableExadbVmClusterIdentityConnectorRequest": {
+      "description": "The request for `ExadbVmCluster.DisableExadbVmClusterIdentityConnector`.",
+      "id": "DisableExadbVmClusterIdentityConnectorRequest",
+      "properties": {},
+      "type": "object"
+    },
     "Empty": {
       "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
       "id": "Empty",
+      "properties": {},
+      "type": "object"
+    },
+    "EnableCloudVmClusterIdentityConnectorRequest": {
+      "description": "The request for `CloudVmCluster.EnableCloudVmClusterIdentityConnector`.",
+      "id": "EnableCloudVmClusterIdentityConnectorRequest",
+      "properties": {},
+      "type": "object"
+    },
+    "EnableExadbVmClusterIdentityConnectorRequest": {
+      "description": "The request for `ExadbVmCluster.EnableExadbVmClusterIdentityConnector`.",
+      "id": "EnableExadbVmClusterIdentityConnectorRequest",
       "properties": {},
       "type": "object"
     },
@@ -7502,6 +7642,10 @@
           "$ref": "IdentityConnector",
           "description": "Output only. The identity connector details which will allow OCI to securely access the resources in the customer project.",
           "readOnly": true
+        },
+        "identityConnectorDisabled": {
+          "description": "Optional. Input only. Immutable. If set to true, disables the automatic provisioning of the Workload Identity Connector during creation. If set to false or omitted, the Workload Identity Connector will be automatically provisioned by default. Note: Provisioning the Workload Identity Connector is a prerequisite for enabling Google Cloud CMEK.",
+          "type": "boolean"
         },
         "labels": {
           "additionalProperties": {
@@ -11104,8 +11248,23 @@
           "readOnly": true,
           "type": "string"
         },
+        "identityConnectorId": {
+          "description": "Output only. The unique partner identifier for the Identity Connector, used to establish secure cross-cloud access between Google Cloud and OCI. This corresponds directly to the ID of the OracleDbGcpIdentityConnector resource in Oracle Cloud Infrastructure (OCI).",
+          "readOnly": true,
+          "type": "string"
+        },
+        "lifecycleStateDetails": {
+          "description": "Output only. Additional information about the current lifecycle state.",
+          "readOnly": true,
+          "type": "string"
+        },
         "serviceAgentEmail": {
           "description": "Output only. A google managed service account on which customers can grant roles to access resources in the customer project. Example: `p176944527254-55-75119d87fd8f@gcp-sa-oci.iam.gserviceaccount.com`",
+          "readOnly": true,
+          "type": "string"
+        },
+        "workloadIdentityPool": {
+          "description": "Output only. The resource name of the Workload Identity Pool configured for identity federation with OCI. This exact pool name can be used to configure VPC Service Controls (VPC-SC) egress rules. Format: `projects/{project}/locations/global/workloadIdentityPools/{workload_identity_pool}`",
           "readOnly": true,
           "type": "string"
         }

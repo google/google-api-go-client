@@ -2557,6 +2557,33 @@ func (s FunctionEntity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GcsSource: Cloud Storage source details for seeding.
+type GcsSource struct {
+	// Bucket: Required. The Cloud Storage bucket containing the schema report
+	// files.
+	Bucket string `json:"bucket,omitempty"`
+	// Prefix: Required. The prefix for the report paths in the bucket. Different
+	// seed versions (report versions) might reside in the same bucket, the prefix
+	// allows to identify the correct seed version.
+	Prefix string `json:"prefix,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Bucket") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Bucket") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GcsSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GcsSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GenerateSshScriptRequest: Request message for 'GenerateSshScript' request.
 type GenerateSshScriptRequest struct {
 	// Vm: Required. Bastion VM Instance name to use or to create.
@@ -5465,6 +5492,8 @@ type SeedConversionWorkspaceRequest struct {
 	// DestinationConnectionProfile: Optional. Fully qualified (Uri) name of the
 	// destination connection profile.
 	DestinationConnectionProfile string `json:"destinationConnectionProfile,omitempty"`
+	// GcsSource: Optional. Cloud Storage source details for seeding.
+	GcsSource *GcsSource `json:"gcsSource,omitempty"`
 	// SourceConnectionProfile: Optional. Fully qualified (Uri) name of the source
 	// connection profile.
 	SourceConnectionProfile string `json:"sourceConnectionProfile,omitempty"`
@@ -5897,7 +5926,12 @@ func (s SourceObjectIdentifier) MarshalJSON() ([]byte, error) {
 // SourceObjectsConfig: List of configurations for the source objects to be
 // migrated.
 type SourceObjectsConfig struct {
-	// ObjectConfigs: Optional. The list of the objects to be migrated.
+	// ExcludedObjectConfigs: Optional. The list of the objects to be excluded from
+	// the migration. Exclusion takes precedence over inclusion in
+	// `object_configs`.
+	ExcludedObjectConfigs []*SourceObjectConfig `json:"excludedObjectConfigs,omitempty"`
+	// ObjectConfigs: Optional. The list of the objects to be included in the
+	// migration.
 	ObjectConfigs []*SourceObjectConfig `json:"objectConfigs,omitempty"`
 	// ObjectsSelectionType: Optional. The objects selection type of the migration
 	// job.
@@ -5908,15 +5942,15 @@ type SourceObjectsConfig struct {
 	//   "ALL_OBJECTS" - Migrate all of the objects.
 	//   "SPECIFIED_OBJECTS" - Migrate specific objects.
 	ObjectsSelectionType string `json:"objectsSelectionType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ObjectConfigs") to
+	// ForceSendFields is a list of field names (e.g. "ExcludedObjectConfigs") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ObjectConfigs") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ExcludedObjectConfigs") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

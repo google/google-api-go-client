@@ -1556,6 +1556,7 @@
                     "$ref": "ListReactionsResponse"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/chat.app.messages.readonly",
                     "https://www.googleapis.com/auth/chat.bot",
                     "https://www.googleapis.com/auth/chat.messages",
                     "https://www.googleapis.com/auth/chat.messages.reactions",
@@ -2213,7 +2214,7 @@
       }
     }
   },
-  "revision": "20261029",
+  "revision": "20261103",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "AccessPermissionSetting": {
